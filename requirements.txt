@@ -1,10 +1,11 @@
 #CLASSIFIER
-gTTS
 transformers
 torch
 #pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 
 #VID
+gTTS
 requests
 python-dotenv
 moviepy #Install ImageMagick and set path
+Pillow==9.5.0

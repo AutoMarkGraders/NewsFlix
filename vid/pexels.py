@@ -9,10 +9,10 @@ headers = {
     'Authorization': API_KEY
 }
 params = {
-    'query': 'nature',  # search term
+    'query': 'forest',  # search term
     'per_page': 1,  # Number of results 
-    'orientation': 'portrait',
-    'color': 'green'
+    'orientation': 'landscape',
+    #'color': 'green'
 }
 
 response = requests.get(url, headers=headers, params=params)
@@ -23,3 +23,5 @@ image_url = data['photos'][0]['src']['original']
 img_data = requests.get(image_url).content
 with open('stock_image.jpg', 'wb') as handler:
     handler.write(img_data)
+
+print('Image downloaded successfully')
