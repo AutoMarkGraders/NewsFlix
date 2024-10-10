@@ -21,11 +21,11 @@ background = background.set_position(lambda t: (int(min(0, (width - new_width) *
 
 # SUBTITLE SETTINGS
 input_text = "This is a long string that will scroll through the screen like a subtitle."
-font_size = 100
-font_color = 'white'
+font_size = 150
+font_color = 'yellow'
 
 # Create the text clip (the width can be larger than the screen to allow movement)
-text_clip = mp.TextClip(input_text, fontsize=font_size, color=font_color, size=(None, None))
+text_clip = mp.TextClip(input_text, fontsize=font_size, color=font_color, font='Arial-Bold', size=(None, None), stroke_color="black", stroke_width=9)
 
 # Length the text should move
 text_width = text_clip.size[0]

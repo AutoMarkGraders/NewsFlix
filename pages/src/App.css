@@ -1,0 +1,44 @@
+#App {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 2fr;
+  gap: 10px;
+
+}
+
+#Heading {
+    border-bottom: solid black 1px; 
+}
+
+#Left {
+    border-right: solid black 1px; 
+}
+
+#Right {
+    grid-row: span 2;
+}
+#Sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure it stays on top */
+}    
+
+#OldUploads {
+  flex: 1; /* Take up remaining space between the Sidebar and BottomBar */
+  overflow-y: auto; /* Make it scrollable */
+  
+  padding-top: 10vh; /* Space for fixed TopBar */
+  padding-bottom: 40vh; /* Space for fixed BottomBar */
+}
+
+#NewUpload {
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Ensure it stays on top */
+}    
