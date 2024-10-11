@@ -9,19 +9,18 @@ headers = {
     'Authorization': API_KEY
 }
 params = {
-    'query': 'forest',  # search term
-    'per_page': 1,  # Number of results 
+    'query': 'disaster',  # search term
+    'per_page': 3,  # Number of results 
     'orientation': 'landscape',
     #'color': 'green'
 }
 
-response = requests.get(url, headers=headers, params=params)
-data = response.json()
-image_url = data['photos'][0]['src']['original'] 
+# download the images
+response = requests.get(url, headers=headers, params=params).json()
+for i, photo in enumerate(response['photos'], start=1):
+    image_url = photo['src']['original']
+    img_data = requests.get(image_url).content
+    with open(f'{i}.jpg', 'wb') as handler:
+        handler.write(img_data)    
 
-# download the image
-img_data = requests.get(image_url).content
-with open('stock_image.jpg', 'wb') as handler:
-    handler.write(img_data)
-
-print('Image downloaded successfully')
+print('Images downloaded successfully')

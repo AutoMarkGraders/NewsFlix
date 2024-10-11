@@ -6,9 +6,9 @@ change_settings({"IMAGEMAGICK_BINARY": r"C:\Program Files\ImageMagick-7.1.1-Q16-
 
 # VIDEO SETTINGS
 width, height = 1080, 1920  # aspect ratio 9:16
-duration = 10  # seconds
+duration = 30  # seconds
 
-background = ImageClip('stock_image.jpg').set_duration(duration)
+background = ImageClip('1.jpg').set_duration(duration)
 
 # Calculate the new width after resizing to maintain the image's aspect ratio
 image_width, image_height = background.size
@@ -20,7 +20,8 @@ background = background.resize(height=height)
 background = background.set_position(lambda t: (int(min(0, (width - new_width) * (1 - t / duration))), 0))
 
 # SUBTITLE SETTINGS
-input_text = "This is a long string that will scroll through the screen like a subtitle."
+#input_text = "Moment dog sparks house fire after chewing power bank An indoor monitoring camera shows the moment a dog unintentionally caused a house fire after chewing on a portable lithium-ion battery power bank. In the video released by Tulsa Fire Department in Oklahoma, two dogs and a cat can be seen in the living room before a spark started the fire that spread within minutes. Tulsa Fire Department public information officer Andy Little said the pets escaped through a dog door, and according to local media the family was also evacuated safely. Had there not been a dog door, they very well could have passed away, he told CBS affiliate KOTV."
+input_text = "Slovenian handball team makes it to Paris Olympics semifinal Lille, 8 August - Slovenia defeated Norway 33:28 in the Olympic men's handball tournament in Lille late on Wednesday to advance to the semifinal where they will face Denmark on Friday evening. This is the best result the team has so far achieved at the Olympic Games and one of the best performances in the history of Slovenia's team sports squads"
 font_size = 150
 font_color = 'yellow'
 

@@ -9,3 +9,9 @@ requests
 python-dotenv
 moviepy #Install ImageMagick and set path
 Pillow==9.5.0
+
+#BACKEND
+fastapi
+uvicorn
+pydantic-settings
+sqlalchemy
