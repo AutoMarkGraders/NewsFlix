@@ -1,18 +1,17 @@
-import React from "react";
 import styled from "styled-components";
 
 const Rondo = () => {
   return (
     <StyledWrapper>
-      <div className="card">
+      <div className="rondo">
         <p>
-          <span>Upload Image</span>
+          <span>News Image 📰</span>
         </p>
         <p>
-          <span>Provide Link</span>
+          <span>Online Link 🔗</span>
         </p>
         <p>
-          <span>Paste Article</span>
+          <span>Article Text 📝</span>
         </p>
       </div>
     </StyledWrapper>
@@ -20,17 +19,17 @@ const Rondo = () => {
 };
 
 const StyledWrapper = styled.div`
-  .card {
-    width: 310px;
+  .rondo {
+    width: 250px;
     height: 254px;
     border-radius: 4px;
-    background: rgba(33, 33, 33, 0.8); /* Set transparency here */
+    background: rgba(33, 33, 33, 0.3); /* Set transparency here */
     display: flex;
     gap: 4px;
     padding: 0.4em;
   }
 
-  .card p {
+  .rondo p {
     height: 100%;
     flex: 1;
     overflow: hidden;
@@ -44,22 +43,23 @@ const StyledWrapper = styled.div`
     align-items: center;
   }
 
-  .card p:hover {
+  .rondo p:hover {
     flex: 4;
   }
 
-  .card p span {
+  .rondo p span {
     min-width: 14em;
     padding: 0.5em;
     text-align: center;
     transform: rotate(-90deg);
     transition: all 0.5s;
-    text-transform: uppercase;
+    text-transform: none;
+    font-weight: 300;
     color: rgba(255, 255, 255, 0.8); /* Set transparency here */
     letter-spacing: 0.1em;
   }
 
-  .card p:hover span {
+  .rondo p:hover span {
     transform: rotate(0);
   }
 `;

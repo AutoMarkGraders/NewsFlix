@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const Threed = () => {
@@ -13,10 +12,6 @@ const Threed = () => {
             </p>
             <span className="see-more">generate</span>
           </div>
-          <div className="date-box">
-            <span className="month">JUNE</span>
-            <span className="date">29</span>
-          </div>
         </div>
       </div>
     </StyledWrapper>
@@ -25,14 +20,14 @@ const Threed = () => {
 
 const StyledWrapper = styled.div`
   .parent {
-    width: 300px;
+    width: 400px;
     padding: 20px;
     perspective: 1000px;
   }
 
   .card {
-    padding-top: 50px;
-    /* border-radius: 10px; */
+    padding: 10px;
+    border-radius: 4px;
     border: 3px solid rgb(255, 255, 255);
     transform-style: preserve-3d;
     background: linear-gradient(135deg,#0000 18.75%,#f3f3f3 0 31.25%,#0000 0),
@@ -41,6 +36,7 @@ const StyledWrapper = styled.div`
     background-position: 0 0, 0 0;
     background-color: #f0f0f0;
     width: 100%;
+    height: 100%;
     box-shadow: rgba(142, 142, 142, 0.3) 0px 30px 30px -10px;
     transition: all 0.5s ease-in-out;
   }
@@ -51,18 +47,18 @@ const StyledWrapper = styled.div`
   }
 
   .content-box {
-    background: url('/article.jpg') no-repeat center center; /* Update this line */
+    background: url('/article.png') no-repeat center center; /* Update this line */
     background-size: cover; /* Ensure the image covers the entire background */
-    /* border-radius: 10px 100px 10px 10px; */
+    border-radius: 2px;
     transition: all 0.5s ease-in-out;
-    padding: 60px 25px 25px 25px;
+    padding: 100px 25px 25px 25px;
     transform-style: preserve-3d;
   }
 
   .content-box .card-title {
     display: inline-block;
-    color: white;
-    font-size: 25px;
+    color: black;
+    font-size: 35px;
     font-weight: 900;
     transition: all 0.5s ease-in-out;
     transform: translate3d(0px, 0px, 50px);
@@ -74,9 +70,9 @@ const StyledWrapper = styled.div`
 
   .content-box .card-content {
     margin-top: 10px;
-    font-size: 12px;
-    font-weight: 700;
-    color: #f2f2f2;
+    font-size: 20px;
+    font-weight: 500;
+    color: black;
     transition: all 0.5s ease-in-out;
     transform: translate3d(0px, 0px, 30px);
   }
@@ -89,12 +85,13 @@ const StyledWrapper = styled.div`
     cursor: pointer;
     margin-top: 1rem;
     display: inline-block;
-    font-weight: 900;
-    font-size: 9px;
+    font-weight: 800;
+    font-size: 12px;
     text-transform: uppercase;
-    color: rgb(7, 185, 255);
+    color: black;
     /* border-radius: 5px; */
-    background: white;
+    color: white;
+    background: rgb(32,32,32);
     padding: 0.5rem 0.7rem;
     transition: all 0.5s ease-in-out;
     transform: translate3d(0px, 0px, 20px);
