@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-const Threed = () => {
+
+const Threed = ({ handleGenerateClick }) => {
   return (
     <StyledWrapper>
       <div className="parent">
@@ -10,7 +11,7 @@ const Threed = () => {
             <p className="card-content">
               Try out the project by converting this article into a reel!
             </p>
-            <span className="see-more">generate</span>
+            <span className="see-more" onClick={handleGenerateClick}>generate</span>
           </div>
         </div>
       </div>

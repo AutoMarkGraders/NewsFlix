@@ -1,10 +1,10 @@
 import './Right.css'
 import Threed from '../ui/Threed'
 
-const Right = () => {
+const Right = ({ handleGenerateClick }) => {
   return (
     <div id="Right">
-      <Threed />
+      <Threed handleGenerateClick={handleGenerateClick} />
     </div>
   )
 }

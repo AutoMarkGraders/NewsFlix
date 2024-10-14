@@ -1,6 +1,7 @@
 #functions to write to table
 
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from sqlalchemy import Table, Column, Integer, Float, String, MetaData, insert, select, update, func
 
@@ -59,3 +60,6 @@ def generate(textInput: schemas.TextInput):
     return {"video": "hehe"}
 
 
+@router.get("/demo", status_code=status.HTTP_201_CREATED)
+def demo():
+    return FileResponse("reel.mp4", media_type="video/mp4")
