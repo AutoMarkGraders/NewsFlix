@@ -33,3 +33,6 @@ __pycache__/
 
 #classifier
 **/saved_model/
+
+#summarizer
+summarizer/.ipynb_checkpoints/importmodel1-checkpoint.ipynb
