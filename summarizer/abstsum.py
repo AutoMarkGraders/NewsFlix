@@ -29,12 +29,21 @@ AI is also being leveraged to improve patient care and hospital efficiency. Many
 However, the integration of AI in healthcare is not without challenges. Data privacy remains a major concern, as medical data is highly sensitive and regulations such as the Health Insurance Portability and Accountability Act (HIPAA) in the United States impose strict guidelines on how patient information can be used and stored. Ensuring that AI systems are transparent and free of bias is also crucial, as biased algorithms could lead to unequal treatment outcomes.
 Despite these challenges, experts believe that the potential benefits of AI in healthcare far outweigh the risks. According to a report from the World Health Organization, AI could help address global healthcare shortages by assisting medical professionals in under-resourced regions, providing remote diagnostics and support. As AI technology continues to evolve, its role in shaping the future of medicine will only grow, offering new possibilities for how we understand, treat, and prevent disease.
 The coming years will likely see increased investment in AI healthcare solutions, with governments and private companies alike recognizing the transformative potential of this technology. While there is still much to be done in terms of regulation and integration, the future of AI in healthcare looks promising, offering hope for more efficient, effective, and accessible medical care around the world.
+''',
+'''In recent years, there has been a growing global push to protect biodiversity as the impacts of habitat loss, pollution, and climate change drive species closer to extinction. Governments and organizations worldwide have launched initiatives to conserve biodiversity hotspots, restore damaged ecosystems, and establish new protected areas. 
+The Kunming-Montreal Global Biodiversity Framework, adopted in 2022, aims to halt biodiversity loss by 2030, setting targets like protecting 30% of land and marine areas and restoring 20% of degraded ecosystems. 
+Countries such as Brazil are intensifying efforts to reduce Amazon deforestation, while the U.S. has launched the “America the Beautiful” initiative to protect 30% of its lands and waters. In addition, corporations and NGOs are adopting sustainable practices and supporting reforestation projects. However, challenges such as funding, enforcement, and conflicting land-use priorities remain. 
+Conservationists believe that a shift toward viewing ecological health as essential to economic resilience is crucial for achieving lasting impact.
 ''']
 
 # Generate the summary
-summary = summarizer(input_text, min_length=50, max_length=75)
+summary = summarizer(input_text)    #, min_length=50, max_length=75
 
-#summary_text = summary[0]['summary_text']
+s1 = summary[0]['summary_text']
+s2 = summary[1]['summary_text']
+s3 = summary[2]['summary_text']
 
 # Print the summary
-print(summary)
+print(s1+"\n")
+print(s2+"\n")
+print(s3)
