@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-#from .routers import exam, view, delete
-from .routers import upload
+from .routers import user, upload
 
 # uvicorn app.main:app --reload  ##fetch('http://localhost:8000/').then(res => res.json()).then(console.log)
 
@@ -18,9 +17,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# app.include_router(exam.router)
-# app.include_router(view.router)
-# app.include_router(delete.router)
+app.include_router(user.router)
 app.include_router(upload.router)
 
 @app.get("/")
