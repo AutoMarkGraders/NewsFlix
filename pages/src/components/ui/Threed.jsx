@@ -9,7 +9,7 @@ const Threed = ({ handleGenerateClick }) => {
           <div className="content-box">
             <span className="card-title">Take a Demo</span>
             <p className="card-content">
-              Try out the project by converting this article into a reel!
+              Try out our AI powered NewsToReel converter by generating a reel from this news article!
             </p>
             <span className="see-more" onClick={handleGenerateClick}>generate</span>
           </div>
@@ -52,7 +52,7 @@ const StyledWrapper = styled.div`
     background-size: cover; /* Ensure the image covers the entire background */
     border-radius: 2px;
     transition: all 0.5s ease-in-out;
-    padding: 100px 25px 25px 25px;
+    padding: 75px 25px 25px 25px;
     transform-style: preserve-3d;
   }
 
