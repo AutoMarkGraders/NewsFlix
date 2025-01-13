@@ -1,31 +1,16 @@
-import { useState } from 'react'
-import './App.css'
-import Heading from './components/Heading/Heading';
-import Left from './components/Left/Left';
-import Right from './components/Right/Right';
-import ReelPlayer from './components/ReelPlayer/ReelPlayer';
-import Card from './components/ui/Card';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import Auth from './components/Auth';
 
 const App = () => {
-  const [showVideo, setShowVideo] = useState(false);
-
-  const handleGenerateClick = () => {
-    setShowVideo(true);
-  };
-
-  return ( 
-    <div>
-    {!showVideo ? (
-      <div id="App">
-        <Heading />
-        <Right handleGenerateClick={handleGenerateClick} />
-        <Left />
-      </div>
-    ) : (
-      <ReelPlayer />
-    )}
-    </div>
-  )
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Auth />} />
+        <Route path="/home" element={<HomePage />} />
+      </Routes>
+    </Router>
+  );
 };
 
-export default App
+export default App;

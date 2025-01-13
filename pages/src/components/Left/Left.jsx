@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import './Left.css'
-import Card from '../ui/Card';
+//import Card from '../ui/Card';
 import Rondo from '../ui/Rondo';
 
 const Left = () => {
