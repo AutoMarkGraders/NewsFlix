@@ -1,5 +1,4 @@
 from gtts import gTTS
-import os
 
 # Function to convert text to speech
 def text_to_speech(text, lang='en', slow=False):
