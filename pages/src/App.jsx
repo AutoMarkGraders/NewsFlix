@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
 import Auth from './components/Auth';
+import HomePage from './pages/HomePage';
+import VideoPage from './pages/VideoPage';
 
 const App = () => {
   return (
@@ -8,6 +9,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Auth />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/video" element={<VideoPage />} />
       </Routes>
     </Router>
   );
