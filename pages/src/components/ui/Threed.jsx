@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 
-const Threed = ({ handleGenerateClick }) => {
+const Threed = ({ handleDemoClick }) => {
   return (
     <StyledWrapper>
       <div className="parent">
@@ -11,7 +11,7 @@ const Threed = ({ handleGenerateClick }) => {
             <p className="card-content">
               Try out our AI powered NewsToReel converter by generating a reel from this news article!
             </p>
-            <span className="see-more" onClick={handleGenerateClick}>generate</span>
+            <span className="see-more" onClick={handleDemoClick}>generate</span>
           </div>
         </div>
       </div>

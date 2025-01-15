@@ -1,16 +1,56 @@
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 
 const Rondo = () => {
+  const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await fetch('http://localhost:8000/upload/ocr', {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await response.json();
+        const message = data.text; // Assuming the response contains the text in a field named 'text'
+        navigate('/video', { state: { message } });
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      }
+    }
+  };
+
+  const handleButtonClick1 = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleButtonClick3 = () => {
+    navigate('/video', { state: { message: '' } });
+  };
+
   return (
     <StyledWrapper>
       <div className="rondo">
-        <p>
+        <p onClick={handleButtonClick1}>
           <span>News Image 📰</span>
         </p>
-        <p>
+        <input
+          type="file"
+          ref={fileInputRef}
+          style={{ display: 'none' }}
+          onChange={handleImageUpload}
+        />
+        <p onClick={() => alert('Button 2 clicked')}>
           <span>Online Link 🔗</span>
         </p>
-        <p>
+        
+        <p onClick={handleButtonClick3}>
           <span>Article Text 📝</span>
         </p>
       </div>

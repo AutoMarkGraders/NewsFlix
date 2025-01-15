@@ -14,6 +14,10 @@
 
 #Left {
     border-right: solid black 1px; 
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #Right {
@@ -39,6 +43,10 @@
 
 #Left {
     border-right: solid black 1px; 
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
