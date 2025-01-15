@@ -31,7 +31,7 @@ const Rondo = () => {
   };
 
   const handleButtonClick3 = () => {
-    navigate('/video', { state: { message: '' } });
+    navigate('/video', { state: { message: '', type: 'text'} });
   };
 
   return (

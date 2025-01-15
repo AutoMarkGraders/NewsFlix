@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
@@ -7,7 +8,12 @@ import './VideoPage.css';
 
 const VideoPage = () => {
     const location = useLocation();
-    const { message } = location.state || { message: '' };
+    const { message, type } = location.state || { message: '', type: 'text' };
+    const [showReelPlayer, setShowReelPlayer] = useState(false);
+
+    const handleGenerateClick = () => {
+        setShowReelPlayer(true);
+    };
 
     return (
         <div className="video-page-container">
@@ -15,11 +21,11 @@ const VideoPage = () => {
                 <div className="grid w-full gap-1.5">
                 <Label htmlFor="article">Preview the News Article</Label>
                 <Textarea placeholder="Paste an article here." value={message} id="article" />
-                <Button>Generate</Button>
+                <Button onClick={handleGenerateClick}>Generate</Button>
                 </div>
             </div>
             <div className="right-half">
-                <ReelPlayer />
+                {showReelPlayer && <ReelPlayer type={type} />}
             </div>
         </div>
     );
