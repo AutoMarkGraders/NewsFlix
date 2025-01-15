@@ -6,11 +6,11 @@ from .. import schemas
 from .. import generator
 
 router = APIRouter(
-    prefix="/upload",
-    tags=['Upload'] # for documentation
+    prefix="/news",
+    tags=['News'] # for documentation
 )
 
-@router.post("/generate", status_code=status.HTTP_201_CREATED)
+@router.post("/text", status_code=status.HTTP_201_CREATED)
 def generate(textInput: schemas.TextInput):
         
     article = textInput.text
@@ -25,7 +25,7 @@ def generate(textInput: schemas.TextInput):
     #vid gen
     generator.generate(summary, category)
 
-    return {"video": "hehe"}
+    return FileResponse("reel.mp4", media_type="video/mp4")
 
 
 @router.get("/demo", status_code=status.HTTP_201_CREATED)

@@ -13,7 +13,7 @@ const Rondo = () => {
       formData.append('file', file);
 
       try {
-        const response = await fetch('http://localhost:8000/upload/ocr', {
+        const response = await fetch('http://localhost:8000/news/ocr', {
           method: 'POST',
           body: formData,
         });

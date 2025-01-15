@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import user, upload
+from .routers import user, news
 
 # uvicorn app.main:app --reload  ##fetch('http://localhost:8000/').then(res => res.json()).then(console.log)
 
@@ -18,7 +18,7 @@ app.add_middleware(
 )
 
 app.include_router(user.router)
-app.include_router(upload.router)
+app.include_router(news.router)
 
 @app.get("/")
 def root():
