@@ -18,8 +18,8 @@ const Rondo = () => {
           body: formData,
         });
         const data = await response.json();
-        const message = data.text; // Assuming the response contains the text in a field named 'text'
-        navigate('/video', { state: { message } });
+        const ocrText = data.text; // Assuming the response contains the text in a field named 'text'
+        navigate('/video', { state: { text: ocrText, type: 'notDemo' } });
       } catch (error) {
         console.error('Error uploading file:', error);
       }
@@ -31,7 +31,7 @@ const Rondo = () => {
   };
 
   const handleButtonClick3 = () => {
-    navigate('/video', { state: { message: '', type: 'text'} });
+    navigate('/video', { state: { text: '', type: 'notDemo'} });
   };
 
   return (

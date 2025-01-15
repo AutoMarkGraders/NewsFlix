@@ -7,8 +7,8 @@ import './VideoPage.css';
 
 const VideoPage = () => {
   const location = useLocation();
-  const { message: initialMessage, type } = location.state || { message: '', type: 'text' };
-  const [message, setMessage] = useState(initialMessage);
+  const { text: initialText, type } = location.state || { text: '', type: 'notDemo' };
+  const [text, setText] = useState(initialText);
   const [showReelPlayer, setShowReelPlayer] = useState(false);
   const [videoUrl, setVideoUrl] = useState('');
 
@@ -24,7 +24,7 @@ const VideoPage = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ text: message }),
+          body: JSON.stringify({ text: text }),
         });
         const blob = await response.blob();
         const videoObjectUrl = URL.createObjectURL(blob);
@@ -37,34 +37,36 @@ const VideoPage = () => {
   };
 
   const handleChange = (event) => {
-    setMessage(event.target.value);
+    setText(event.target.value);
   };
 
   return (
     <div className="video-page-container">
+
       <div className="left-half">
         <div className="grid w-full gap-1.5">
           <Label htmlFor="article">Preview the News Article</Label>
           <Textarea
             placeholder="Paste an article here."
-            value={message}
+            value={text}
             id="article"
             onChange={handleChange}
           />
           <Button onClick={handleGenerateClick}>Generate</Button>
         </div>
       </div>
+
       <div className="right-half">
         {showReelPlayer && (
           <div id="ReelPlayer">
             <h2>Your Generated Video:</h2>
-            <video width="250" controls>
+            <video width="300" controls>
               <source src={videoUrl} type="video/mp4" />
-              Your browser does not support the video tag.
             </video>
           </div>
         )}
       </div>
+      
     </div>
   );
 

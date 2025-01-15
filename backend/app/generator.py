@@ -78,3 +78,11 @@ def generate(summary, category):
 
     # Write the final video file
     video.write_videofile("reel.mp4", fps=24) # saved in CWD (backend/)
+
+# better algo
+# gtts to get reel.mp3
+# set duration as 80% of reel.mp3 duration
+# make video with multiple images
+# add audio to video
+# transcript
+# add captions
