@@ -57,7 +57,7 @@ def generate(summary, category):
     font_color = 'yellow'
 
     # Create the text clip (the width can be larger than the screen to allow movement)
-    text_clip = mp.TextClip(summary, fontsize=font_size, color=font_color, font='Arial-Bold', size=(None, None), stroke_color="black", stroke_width=9)
+    text_clip = mp.TextClip(summary, fontsize=font_size, color=font_color, font='Arial-Bold', size=(None, None), stroke_color="black", stroke_width=5)
 
     # Length the text should move
     text_width = text_clip.size[0]
@@ -74,7 +74,7 @@ def generate(summary, category):
     tts.save("reel.mp3")
     narration = mp.AudioFileClip("reel.mp3")
     narration = narration.fx(mp.vfx.speedx, final_duration=duration)
-    video = narration.set_audio(narration)
+    video = video.set_audio(narration)
 
     # Write the final video file
     video.write_videofile("reel.mp4", fps=24) # saved in CWD (backend/)
