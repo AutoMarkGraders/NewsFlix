@@ -37,3 +37,5 @@ __pycache__/
 #summarizer
 summarizer/.ipynb_checkpoints/importmodel1-checkpoint.ipynb
 summarizer/.ipynb_checkpoints/summary1-checkpoint.ipynb
+summarizer/saved_model_summarizer
+**/saved_model_summarizer/
