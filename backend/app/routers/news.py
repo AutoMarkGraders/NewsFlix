@@ -17,14 +17,16 @@ router = APIRouter(
 def generate(textInput: schemas.TextInput):
         
     article = textInput.text
+    print("Started!!!\n")
     # insert article into table
 
     # SUMMARIZER
     summary = summarizer.full_summarize(article)
-    print("S")
+    print(summary)
 
     # CLASSIFIER
     category = classify.full_classify(summary)
+    print(category)
 
     #vid gen
     generator.generate(summary, category)
