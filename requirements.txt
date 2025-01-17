@@ -7,7 +7,7 @@ torch
 gTTS
 requests
 python-dotenv
-moviepy #Install ImageMagick and set path
+moviepy
 Pillow==9.5.0
 
 #BACKEND

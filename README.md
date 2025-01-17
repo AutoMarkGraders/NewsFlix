@@ -59,6 +59,7 @@ cd news-to-reel
     cd backend
     pip install -r requirements.txt
     ```
+- **ImageMagick**: Download and install from [imagemagick.org](https://imagemagick.org/script/download.php). Make sure IMAGEMAGICK_BINARY is correct at line 3 of backend/app/generator.py.    
 - **Start server**: Run the FastAPI backend with uvicorn. The server will start on `http://localhost:8000`.
     ```bash
     uvicorn app.main:app --reload

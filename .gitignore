@@ -1,6 +1,6 @@
 .env
-*.jpg
-*.png
+[0-9]*.jpg
+[0-9]*.png
 *.mp4
 *.mp3
 
