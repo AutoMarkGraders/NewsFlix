@@ -5,7 +5,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 def full_summarize(input_text):
     model_name = "philschmid/bart-large-cnn-samsum"
-    save_directory = "./saved_model_summary"
+    save_directory = "/saved_model_summary"
     tokenizer = AutoTokenizer.from_pretrained(save_directory)
     model = AutoModelForSeq2SeqLM.from_pretrained(save_directory)
     summarizer = pipeline("summarization", model=model, tokenizer=tokenizer, device=0)
