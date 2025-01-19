@@ -1,12 +1,13 @@
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
 from fastapi.responses import FileResponse
 
-
 from .. import schemas
 #from ..database import get_db
 from .. import summarizer
 from .. import classify
 from .. import generator
+from .. import extractor
+import logging
 
 router = APIRouter(
     prefix="/news",
@@ -14,7 +15,7 @@ router = APIRouter(
 )
 
 @router.post("/text", status_code=status.HTTP_201_CREATED)
-def generate(textInput: schemas.TextInput):
+def text_to_reel(textInput: schemas.TextInput):
         
     article = textInput.text
     print("Started!!!\n")
@@ -35,18 +36,28 @@ def generate(textInput: schemas.TextInput):
 
 
 @router.post("/image", status_code=status.HTTP_201_CREATED)
-def ocr_image(image: UploadFile = File(...)):
+def image_to_reel(image: UploadFile = File(...)):
     
-    # save image
+    # EXTRACTOR
+    try:
+        article = extractor.extract(image)
+
+    except Exception as e:
+        logging.error(f"Error processing request: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal server error.")
     
-    # article = ocr(image)
+    # SUMMARIZER
+    #summary = summarizer.full_summarize(article)
+    summary = article
+    print(summary)
 
     # CLASSIFIER
-
-    # SUMMARIZER
+    #category = classify.full_classify(summary)
+    category = "theatre"
+    print(category)
 
     #vid gen
-    #generator.generate(summary, category)
+    generator.generate(summary, category)
 
     return FileResponse("reel.mp4", media_type="video/mp4")
 
