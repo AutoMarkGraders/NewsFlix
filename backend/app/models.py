@@ -1,5 +1,6 @@
 # store table models as sqlalchemy models without having to open postgres software
 
+"""
 from sqlalchemy import Column, Integer, String, ARRAY, Date, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import text
@@ -55,3 +56,4 @@ def create_exam_table(institution: str, name: str, max_marks: int, qstn_count: i
     engine = create_engine('postgresql://user:password@localhost/dbname')
     metadata.create_all(engine)    
 '''
+"""

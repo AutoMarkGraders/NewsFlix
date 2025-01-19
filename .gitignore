@@ -1,6 +1,6 @@
 .env
-*.jpg
-*.png
+[0-9]*.jpg
+[0-9]*.png
 *.mp4
 *.mp3
 
@@ -37,3 +37,4 @@ __pycache__/
 #summarizer
 summarizer/.ipynb_checkpoints/importmodel1-checkpoint.ipynb
 summarizer/.ipynb_checkpoints/summary1-checkpoint.ipynb
+**/saved_model_summary

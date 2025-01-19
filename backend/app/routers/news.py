@@ -1,8 +1,11 @@
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
 from fastapi.responses import FileResponse
 
+
 from .. import schemas
 #from ..database import get_db
+from .. import summarizer
+from .. import classify
 from .. import generator
 
 router = APIRouter(
@@ -14,13 +17,16 @@ router = APIRouter(
 def generate(textInput: schemas.TextInput):
         
     article = textInput.text
+    print("Started!!!\n")
     # insert article into table
 
-    # CLASSIFIER
-    category = 'handball'
-
     # SUMMARIZER
-    summary = article
+    summary = summarizer.full_summarize(article)
+    print(summary)
+
+    # CLASSIFIER
+    category = classify.full_classify(summary)
+    print(category)
 
     #vid gen
     generator.generate(summary, category)
