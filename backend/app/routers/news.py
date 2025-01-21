@@ -4,7 +4,7 @@ from fastapi.responses import FileResponse
 from .. import schemas
 #from ..database import get_db
 from .. import summarizer
-from .. import classify
+from .. import classifier
 from .. import generator
 from .. import extractor
 import logging
@@ -17,17 +17,17 @@ router = APIRouter(
 @router.post("/text", status_code=status.HTTP_201_CREATED)
 def text_to_reel(textInput: schemas.TextInput):
         
+    print("\nStarted!!!\n")
     article = textInput.text
-    print("Started!!!\n")
     # insert article into table
 
     # SUMMARIZER
     summary = summarizer.full_summarize(article)
-    print(summary)
+    print(f"\nSUMMARY:\n{summary}")
 
     # CLASSIFIER
-    category = classify.full_classify(summary)
-    print(category)
+    category = classifier.full_classify(summary)
+    print(f"\nCATEGORY:\n{category}")
 
     #vid gen
     generator.generate(summary, category)
@@ -38,6 +38,8 @@ def text_to_reel(textInput: schemas.TextInput):
 @router.post("/image", status_code=status.HTTP_201_CREATED)
 def image_to_reel(image: UploadFile = File(...)):
     
+    print("\nStarted!!!\n")
+
     # EXTRACTOR
     try:
         article = extractor.extract(image)
@@ -47,14 +49,12 @@ def image_to_reel(image: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail="Internal server error.")
     
     # SUMMARIZER
-    #summary = summarizer.full_summarize(article)
-    summary = article
-    print(summary)
+    summary = summarizer.full_summarize(article)
+    print(f"\nSUMMARY:\n{summary}")
 
     # CLASSIFIER
-    #category = classify.full_classify(summary)
-    category = "theatre"
-    print(category)
+    category = classifier.full_classify(summary)
+    print(f"\nCATEGORY:\n{category}")
 
     #vid gen
     generator.generate(summary, category)

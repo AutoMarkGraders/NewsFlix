@@ -32,7 +32,6 @@ def extract(image):
     image_data = image.file.read()
     image_file = io.BytesIO(image_data)
     uploaded_file = genai.upload_file(image_file, mime_type="image/jpeg")
-    print(f"Uploaded file '{uploaded_file.display_name}' as: {uploaded_file.uri}")
 
     # Start a chat session with the Gemini model
     chat_session = model.start_chat(
@@ -48,6 +47,7 @@ def extract(image):
     )
 
     response = chat_session.send_message("Please process the image.")
+    print(f"Gemini extracting text.")
     article = response.text
 
     return article

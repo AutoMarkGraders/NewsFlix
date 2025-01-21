@@ -20,7 +20,7 @@ def generate(summary, category):
     narration = mp.AudioFileClip("reel.mp3")
     duration = narration.duration * 0.85
     narration = narration.fx(mp.vfx.speedx, final_duration=duration)
-    print(f'Duration = {duration}')
+    print(f'\nDuration = {duration}')
 
 # fetch background images
     n = ceil(duration/10)
@@ -33,7 +33,7 @@ def generate(summary, category):
     params = {
         'query': f'{category}',  # search term
         'per_page': n,  # Number of images 
-        'orientation': 'landscape',
+        'orientation': 'portrait',
     }
     response = requests.get(url, headers=headers, params=params).json()
     for i, photo in enumerate(response['photos'], start=1):
@@ -55,21 +55,21 @@ def generate(summary, category):
         aspect_ratio = image_width / image_height
         new_width = int(aspect_ratio * height)
         bg = bg.resize(height=height)
-        # animation to move the image fully across the screen
+        # animation to move the image
         bg = bg.set_position(lambda t: ((width - new_width) * (t / 10), 0))
 
         backgrounds.append(bg)
 
-    # # fast but no animation
-    # background = mp.concatenate_videoclips(backgrounds)
-    # video = mp.CompositeVideoClip([background], size=(width, height))
+    # fast but no animation
+    background = mp.concatenate_videoclips(backgrounds)
+    video = mp.CompositeVideoClip([background], size=(width, height))
 
-    # slow but with animation
-    for bg in backgrounds:
-        video = mp.CompositeVideoClip([video, bg.set_start(video.duration)], size=(width, height))
+    # # slow but with animation
+    # for bg in backgrounds:
+    #     video = mp.CompositeVideoClip([video, bg.set_start(video.duration)], size=(width, height))
 
 # Set the audio to the video
-    video = video.set_audio(narration)
+    video = video.set_audio(narration) # sound seems tinny
 
     # transcript
     # add captions
