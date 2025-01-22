@@ -31,10 +31,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-#classifier
-**/saved_model/
-
 #summarizer
 summarizer/.ipynb_checkpoints/importmodel1-checkpoint.ipynb
 summarizer/.ipynb_checkpoints/summary1-checkpoint.ipynb
-**/saved_model_summary
+
+model.safetensors

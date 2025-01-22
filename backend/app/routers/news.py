@@ -43,6 +43,7 @@ def image_to_reel(image: UploadFile = File(...)):
     # EXTRACTOR
     try:
         article = extractor.extract(image)
+        print(f"\nARTICLE:\n{article}")
 
     except Exception as e:
         logging.error(f"Error processing request: {str(e)}")
