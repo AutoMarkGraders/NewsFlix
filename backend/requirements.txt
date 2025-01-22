@@ -10,3 +10,10 @@ python-multipart==0.0.16
 bcrypt==4.2.0
 moviepy==1.0.3
 google-generativeai==0.8.3
+gTTS==2.5.3
+requests==2.32.3
+python-dotenv==1.0.1
+
+transformers==4.46.2
+torch==2.5.1+cu118 -f https://download.pytorch.org/whl/torch_stable.html
+#pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 # for gpu
