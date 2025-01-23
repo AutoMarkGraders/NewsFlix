@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newspaper Cropper</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Newspaper Cropper</h1>
+
+    <!-- Upload Section -->
+    <div id="upload-section">
+        <h2>Upload Your PDF</h2>
+        <input type="file" id="pdf-upload" accept=".pdf">
+        <button id="upload-btn">Upload</button>
+        <p id="upload-status"></p>
+    </div>
+
+    <!-- Pages Section -->
+    <div id="pages-section" style="display: none;">
+        <h2>Browse PDF Pages</h2>
+        <div id="pages-container"></div>
+    </div>
+
+    <!-- Crop Section -->
+    <div id="crop-section" style="display: none;">
+        <h2>Crop Section</h2>
+        <canvas id="crop-canvas"></canvas>
+        <button id="crop-btn">Crop</button>
+        <div id="cropped-image-container"></div>
+    </div>
+
+    <!-- Show Images Section (Automatically Displayed After Upload) -->
+    <div id="show-images-section" style="display: none;">
+        <h2>Generated Images</h2>
+        <div id="all-images-container"></div>
+    </div>
+
+    <script>
+        document.getElementById('upload-btn').addEventListener('click', uploadPdf);
+
+        let pdfPath = '';
+
+        // Function to handle PDF upload
+        function uploadPdf() {
+            const fileInput = document.getElementById('pdf-upload');
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            fetch('http://127.0.0.1:5000/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    pdfPath = data.pdf_path;
+                    document.getElementById('upload-status').innerText = data.message;
+                    loadPages();
+                    // Call showImages to display the generated images right after upload
+                    showImages();
+                } else {
+                    document.getElementById('upload-status').innerText = 'Error: ' + data.error;
+                }
+            })
+            .catch(error => {
+                document.getElementById('upload-status').innerText = 'Error uploading PDF';
+                console.error('Error:', error);
+            });
+        }
+
+        // Function to load pages as images (if needed for further use)
+        function loadPages() {
+            fetch(`http://127.0.0.1:5000/get-pages?pdf_path=${pdfPath}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.pages) {
+                        const pagesContainer = document.getElementById('pages-container');
+                        pagesContainer.innerHTML = ''; // Clear previous images
+
+                        data.pages.forEach((pageUrl, index) => {
+                            const img = document.createElement('img');
+                            img.src = `http://127.0.0.1:5000${pageUrl}`;
+                            img.classList.add('pdf-page');
+                            img.setAttribute('data-page', index + 1);
+                            img.addEventListener('click', selectImage);
+                            pagesContainer.appendChild(img);
+                        });
+
+                        document.getElementById('pages-section').style.display = 'block';
+                    } else {
+                        alert('No pages found in PDF.');
+                    }
+                })
+                .catch(error => console.error('Error fetching pages:', error));
+        }
+
+        // Function to show all generated images from the output folder
+        function showImages() {
+    fetch('http://127.0.0.1:5000/get-images')  // Fetch image paths from backend
+        .then(response => response.json())
+        .then(data => {
+            console.log('Received data:', data);  // Log the received data
+            const allImagesContainer = document.getElementById('all-images-container');
+            allImagesContainer.innerHTML = '';  // Clear previous images
+
+            data.forEach(imagePath => {
+                const img = document.createElement('img');
+                img.src = `http://127.0.0.1:5000/output${imagePath}`;
+                console.log(`Image URL: ${img.src}`);  // Log the image source being set
+                img.classList.add('output-image');
+                allImagesContainer.appendChild(img);
+            });
+
+            document.getElementById('show-images-section').style.display = 'block'; // Show images section
+        })
+        .catch(error => console.error('Error fetching images:', error));
+}
+
+
+        // Function to handle image selection for cropping
+        function selectImage(event) {
+            const img = event.target;
+            const canvas = document.getElementById('crop-canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Load the image onto the canvas
+            const imgElement = new Image();
+            imgElement.src = img.src;
+            imgElement.onload = function() {
+                canvas.width = imgElement.width;
+                canvas.height = imgElement.height;
+                ctx.drawImage(imgElement, 0, 0);
+
+                // Show crop section
+                document.getElementById('crop-section').style.display = 'block';
+            };
+
+            // Store image URL for cropping
+            window.selectedImage = img.src;
+        }
+    </script>
+</body>
+</html>
