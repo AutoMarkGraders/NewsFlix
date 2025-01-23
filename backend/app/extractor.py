@@ -47,7 +47,7 @@ def extract(image):
     )
 
     response = chat_session.send_message("Please process the image.")
-    print(f"Gemini extracting text.")
+    print("\nGemini extracting text.")
     article = response.text
 
     return article

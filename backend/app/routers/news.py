@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 
 from .. import schemas
 #from ..database import get_db
@@ -17,7 +17,7 @@ router = APIRouter(
 @router.post("/text", status_code=status.HTTP_201_CREATED)
 def text_to_reel(textInput: schemas.TextInput):
         
-    print("\nStarted!!!\n")
+    print("\nStarted!!!")
     article = textInput.text
     # insert article into table
 
@@ -38,7 +38,7 @@ def text_to_reel(textInput: schemas.TextInput):
 @router.post("/image", status_code=status.HTTP_201_CREATED)
 def image_to_reel(image: UploadFile = File(...)):
     
-    print("\nStarted!!!\n")
+    print("\nStarted!!!")
 
     # EXTRACTOR
     try:
@@ -48,6 +48,9 @@ def image_to_reel(image: UploadFile = File(...)):
     except Exception as e:
         logging.error(f"Error processing request: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error.")
+    
+    return JSONResponse(content={"text": article}, status_code=status.HTTP_200_OK)
+
     
     # SUMMARIZER
     summary = summarizer.full_summarize(article)

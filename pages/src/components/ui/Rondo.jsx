@@ -10,10 +10,9 @@ const Rondo = () => {
     const file = event.target.files[0];
     if (file) {
       const formData = new FormData();
-      formData.append('file', file);
-
+      formData.append('image', file);
       try {
-        const response = await fetch('http://localhost:8000/news/ocr', {
+        const response = await fetch('http://localhost:8000/news/image', {
           method: 'POST',
           body: formData,
         });
