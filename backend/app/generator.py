@@ -8,18 +8,24 @@ import os
 from dotenv import load_dotenv
 import requests
 from gtts import gTTS
+from pydub import AudioSegment
 
 
 def generate(summary, category):
 
-# gtts to get reel.mp3
+# gtts and speed up to get reel.mp3
     tts = gTTS(text=summary, lang='en')
-    tts.save("reel.mp3")
+    tts.save("reeel.mp3")
+    # 1.2 times faster
+    audio = AudioSegment.from_file("reeel.mp3")
+    faster_audio = audio._spawn(audio.raw_data, overrides={
+        "frame_rate": int(audio.frame_rate * 1.2)
+    }).set_frame_rate(audio.frame_rate)
+    faster_audio.export("reel.mp3", format="mp3")
 
-# set duration as 85% of reel.mp3 duration
+# set duration as duration of reel.mp3
     narration = mp.AudioFileClip("reel.mp3")
-    duration = narration.duration * 0.85
-    narration = narration.fx(mp.vfx.speedx, final_duration=duration)
+    duration = narration.duration
     print(f'\nDuration = {duration}')
 
 # fetch background images
@@ -69,7 +75,7 @@ def generate(summary, category):
     #     video = mp.CompositeVideoClip([video, bg.set_start(video.duration)], size=(width, height))
 
 # Set the audio to the video
-    video = video.set_audio(narration) # sound seems tinny
+    video = video.set_audio(narration)
 
     # transcript
     # add captions

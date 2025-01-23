@@ -14,29 +14,9 @@ router = APIRouter(
     tags=['News'] # for documentation
 )
 
-@router.post("/text", status_code=status.HTTP_201_CREATED)
-def text_to_reel(textInput: schemas.TextInput):
-        
-    print("\nStarted!!!")
-    article = textInput.text
-    # insert article into table
-
-    # SUMMARIZER
-    summary = summarizer.full_summarize(article)
-    print(f"\nSUMMARY:\n{summary}")
-
-    # CLASSIFIER
-    category = classifier.full_classify(summary)
-    print(f"\nCATEGORY:\n{category}")
-
-    #vid gen
-    generator.generate(summary, category)
-
-    return FileResponse("reel.mp4", media_type="video/mp4")
-
 
 @router.post("/image", status_code=status.HTTP_201_CREATED)
-def image_to_reel(image: UploadFile = File(...)):
+def image_to_text(image: UploadFile = File(...)):
     
     print("\nStarted!!!")
 
@@ -51,7 +31,14 @@ def image_to_reel(image: UploadFile = File(...)):
     
     return JSONResponse(content={"text": article}, status_code=status.HTTP_200_OK)
 
-    
+
+@router.post("/text", status_code=status.HTTP_201_CREATED)
+def text_to_reel(textInput: schemas.TextInput):
+        
+    print("\nStarted!!!")
+    article = textInput.text
+    # insert article into table
+
     # SUMMARIZER
     summary = summarizer.full_summarize(article)
     print(f"\nSUMMARY:\n{summary}")
