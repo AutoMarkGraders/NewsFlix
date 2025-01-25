@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 import requests
 from gtts import gTTS
 from pydub import AudioSegment
-
+import whisper
 
 def generate(summary, category):
 
@@ -47,7 +47,7 @@ def generate(summary, category):
         img_data = requests.get(image_url).content
         with open(f'{i}.jpg', 'wb') as handler: # saved in CWD (backend/)
             handler.write(img_data)
-    print(f'no.of images = {n}')
+    print(f'no.of images = {n}\n')
 
 # set background images
     width, height = 1080, 1920  # aspect ratio 9:16
@@ -74,13 +74,65 @@ def generate(summary, category):
     # for bg in backgrounds:
     #     video = mp.CompositeVideoClip([video, bg.set_start(video.duration)], size=(width, height))
 
-# Set the audio to the video
+
+# transcript
+    # Step 1: Transcribe the audio with Whisper
+    model = whisper.load_model("base")
+    result = model.transcribe("reel.mp3", word_timestamps=True)
+
+    # Step 2: Process the transcription into per-second chunks
+    per_second_transcription = {}
+    last_word = None  # Track the last processed word to avoid duplication
+
+    for segment in result["segments"]:
+        words = segment.get("words", [])
+        
+        for word in words:
+            word_start = word["start"]
+            word_end = word["end"]
+            word_text = word["word"]
+
+            if word_start is not None and word_end is not None:
+                # Round timestamps to the nearest second
+                start_second = int(word_start)
+                end_second = int(word_end)
+                
+                # Add word to the correct second, avoiding duplicates
+                for second in range(start_second, end_second + 1):
+                    if second not in per_second_transcription:
+                        per_second_transcription[second] = []
+                    
+                    if word_text != last_word:  # Avoid adding repeated words
+                        per_second_transcription[second].append(word_text)
+                        last_word = word_text  # Update the last word tracker
+
+    for second, words in (per_second_transcription.items()):
+        print(f"[{second}s]: {' '.join(words)}")
+
+# add captions
+    # Create a list of TextClips for each second
+    text_clips = []
+    for second, words in per_second_transcription.items():
+        # Create a TextClip for the transcription at this second
+        caption_text = " ".join(words)
+        text = TextClip(
+            caption_text,
+            fontsize=70,  # Font size
+            color="white",  # Font color
+            font="Arial-Bold",  # Font type
+            stroke_color="black",  # Add outline to make text readable
+            stroke_width=2
+        )
+        text = text.set_position(("center", video.h - 400)).set_duration(1).set_start(second)
+        text_clips.append(text)
+
+    # Combine the video with the text clips
+    video = mp.CompositeVideoClip([video, *text_clips])
+
     video = video.set_audio(narration)
 
-    # transcript
-    # add captions
-
-    video.write_videofile("reel.mp4", fps=24)        
+    # Write the output video file
+    video.write_videofile("reel.mp4", fps=24)
 
 
 if __name__ == '__main__':
