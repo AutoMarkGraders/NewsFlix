@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import Heading from '../components/Heading/Heading';
-import Right from '../components/Right/Right';
+import Threed from '../components/ui/Threed';
 import Rondo from '../components/ui/Rondo';
+
 import './HomePage.css'
 
 const HomePage = () => {
@@ -17,11 +17,19 @@ const HomePage = () => {
     <div>
     
       <div id="HomePage">
-        <Heading />
-        <Right handleDemoClick={handleDemoClick} />
+
+        <div id="Heading">
+          <h1>NEWS TO REEL</h1>
+        </div>
+
+        <div id="Demo">
+          <Threed handleDemoClick={handleDemoClick} />
+        </div>
+
         <div id="Left">
           <Rondo />
         </div>
+
       </div>
   
     </div>

@@ -60,6 +60,7 @@ cd news-to-reel
     pip install -r requirements.txt
     ```
 - **ImageMagick**: Download and install from [imagemagick.org](https://imagemagick.org/script/download.php). Make sure IMAGEMAGICK_BINARY is correct at line 3 of backend/app/generator.py.
+- **ffmpeg**:
 - **Download Models**: From [here](https://drive.google.com/drive/folders/1BdAAEXgFGacWxk9AcNgP7L9-stAmZcvV?usp=sharing) download model.safetensors for backend/app/saved_classifier and backend/app/saved_summarizer.
 - **Start server**: Run the FastAPI backend with uvicorn. The server will start on `http://localhost:8000`.
     ```bash
