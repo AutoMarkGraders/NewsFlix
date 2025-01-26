@@ -5,7 +5,7 @@ text = '''Slovenian handball team makes it to Paris Olympics semifinal Lille, 8 
 '''
 keywords = kw_model.extract_keywords(
     text, 
-    keyphrase_ngram_range=(1, 2), 
+    keyphrase_ngram_range=(1, 3), 
     stop_words='english', 
     top_n=5, 
     #use_maxsum=True,  # Avoid redundancy in keywords
