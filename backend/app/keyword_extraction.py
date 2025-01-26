@@ -1,7 +1,7 @@
 from keybert import KeyBERT
 
 kw_model = KeyBERT()
-text = '''The Paris Agreement aims to limit global warming to below 2 degrees Celsius, with efforts to keep it under 1.5 degrees. Renewable energy sources like solar, wind, and hydropower are seen as critical components of this transition. Governments, private companies and international organizations are investing billions of dollars in renewable energy projects to support the transition. According to IEA, renewable energy sources accounted for nearly 90% of the global power capacity added in 2021.
+text = '''Slovenian handball team makes it to Paris Olympics semifinal Lille, 8 August - Slovenia defeated Norway 33:28 in the Olympic men's handball tournament in Lille late on Wednesday to advance to the semifinal where they will face Denmark on Friday evening. This is the best result the team has so far achieved at the Olympic Games and one of the best performances in the history of Slovenia's team sports squads
 '''
 keywords = kw_model.extract_keywords(
     text, 
@@ -12,4 +12,4 @@ keywords = kw_model.extract_keywords(
     #diversity=0.7     # Increase diversity of keywords
 )
 print(keywords)
-# Output: [('forest fire', 0.85), ('wildlife', 0.75), ('destruction', 0.70), ...]
+# eg: output: [('forest fire', 0.85), ('wildlife', 0.75), ('destruction', 0.70), ...]
