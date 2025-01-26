@@ -1,3 +1,5 @@
+#pip install keybert
+
 from keybert import KeyBERT
 
 kw_model = KeyBERT()
