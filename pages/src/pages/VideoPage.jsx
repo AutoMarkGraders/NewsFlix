@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { FaWhatsapp, FaFacebook } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import './VideoPage.css';
 
 const VideoPage = () => {
@@ -17,7 +19,8 @@ const VideoPage = () => {
 
     if (type === 'demo') {
       setVideoUrl(`http://localhost:8000/news/demo?cb=${cacheBuster}`);
-    } else {
+    }
+    else {
       try {
         const response = await fetch('http://localhost:8000/news/text', {
           method: 'POST',
@@ -33,36 +36,68 @@ const VideoPage = () => {
         console.error('Error fetching video:', error);
       }
     }
+
     setShowReelPlayer(true);
   };
 
-  const handleChange = (event) => {
-    setText(event.target.value);
-  };
+  // const handleTextareaChange = (event) => {
+  //   setText(event.target.value);
+  // };
+
+ // TODO set as url to vid uploaded in cloud  
+  const shareUrl = window.location.href;
 
   return (
-    <div className="video-page-container">
+    <div id="vp-container">
 
-      <div className="left-half">
+      <div id="lhs">
         <div className="grid w-full gap-1.5">
-          <Label htmlFor="article">Preview the News Article</Label>
-          <Textarea
+          <h2 className='headingg'>Preview the News Article</h2>
+          <Textarea id="article"
             placeholder="Paste an article here."
             value={text}
-            id="article"
-            onChange={handleChange}
+            onChange={(event) => setText(event.target.value)}
           />
           <Button onClick={handleGenerateClick}>Generate</Button>
         </div>
       </div>
 
-      <div className="right-half">
+      <div id="rhs">
         {showReelPlayer && (
           <div id="ReelPlayer">
-            <h2>Your Generated Video:</h2>
-            <video width="300" controls>
+
+            <h2 className='headingg'>Generated Video:</h2>
+
+            <video controls>
               <source src={videoUrl} type="video/mp4" />
             </video>
+
+            <div id='socials'>
+              {/* Facebook Button */}
+              <button
+                onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`, "_blank")}
+                style={{background: "white",border: "none",borderRadius: "50%",cursor: "pointer",fontSize: "40px",color: "#4267B2",}}
+              >
+              <FaFacebook />
+              </button>
+
+              {/* WhatsApp Button */}
+              <button
+                onClick={() => window.open(`https://wa.me/?text=Check out this video: ${shareUrl}`, "_blank")}
+                style={{background: "none",border: "none",cursor: "pointer",fontSize: "40px",color: "#25D366",}}
+              >
+              <FaWhatsapp />
+              </button>
+
+              {/* Twitter Button */}
+              <button
+                onClick={() => window.open(`https://twitter.com/intent/tweet?url=${shareUrl}&text=Check out this video!`, "_blank")}
+                style={{background: "none",border: "none",cursor: "pointer",fontSize: "40px",color: "#000",}}
+              >
+              <FaXTwitter />
+              </button>
+            </div>
+
           </div>
         )}
       </div>

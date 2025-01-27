@@ -207,8 +207,14 @@ body {
   background-position: center;
   font-family: "Oswald", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 100;
-  font-style: normal;
+  font-weight: 400;
   color: black;
 }
 
+@media (max-width: 1100px) and (min-height:1200px) {
+
+body {
+  background-image: url('assets/background_portrait.png');
+}
+
+}
