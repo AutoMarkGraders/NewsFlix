@@ -3,7 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .routers import user, news
 
-# uvicorn app.main:app --reload  ##fetch('http://localhost:8000/').then(res => res.json()).then(console.log)
+# uvicorn app.main:app --reload --host 0.0.0.0    ##fetch('http://localhost:8000/').then(res => res.json()).then(console.log)
+# npm run dev -- --host
 
 app = FastAPI()
 

@@ -1,4 +1,4 @@
-@media (min-width: 1200px) {
+@media (min-width: 450px) {
 
 #HomePage {
     display: grid;
@@ -32,7 +32,7 @@
 }
 
 
-@media (max-width: 1100px) and (min-height:1200px) {
+@media (max-width: 449px) {
 
 #HomePage {
     min-height: 100vh;

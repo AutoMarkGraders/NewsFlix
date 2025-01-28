@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// Set the base URL for your FastAPI backend
-const API_URL = "http://localhost:8000";
+// base URL for FastAPI (.env for ipaddr to show on phone)
+export const API_URL = import.meta.env.VITE_IP_API_URL || "http://localhost:8000";
 
 export const api = axios.create({
   baseURL: API_URL,

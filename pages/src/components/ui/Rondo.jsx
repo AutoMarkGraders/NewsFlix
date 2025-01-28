@@ -1,57 +1,59 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { api } from '@/api';
 import styled from "styled-components";
 
 const Rondo = () => {
   const navigate = useNavigate();
-  const fileInputRef = useRef(null);
+  const imageInputRef = useRef(null);
 
-  const handleImageUpload = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
+  const handleImageInput = async (event) => {
+    const image = event.target.files[0];
+    if (image) {
       const formData = new FormData();
-      formData.append('image', file);
+      formData.append('image', image);
       try {
-        const response = await fetch('http://localhost:8000/news/image', {
-          method: 'POST',
-          body: formData,
+        alert('Processing image. Please wait...');
+        const response = await api.post('/news/image', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         });
-        const data = await response.json();
-        const ocrText = data.text; // Assuming the response contains the text in a field named 'text'
+        const ocrText = response.data.text; // contains the text in a field named 'text'
         navigate('/video', { state: { text: ocrText, type: 'notDemo' } });
       } catch (error) {
+        alert('ERROR');
         console.error('Error uploading file:', error);
       }
     }
   };
 
-  const handleButtonClick1 = () => {
-    fileInputRef.current.click();
-  };
-
-  const handleButtonClick3 = () => {
+  const handleTextInput = () => {
     navigate('/video', { state: { text: '', type: 'notDemo'} });
   };
 
   return (
     <StyledWrapper>
       <div className="rondo">
-        <p onClick={handleButtonClick1}>
+
+        <p onClick={() => imageInputRef.current.click()}>
           <span>News Image 📰</span>
         </p>
         <input
           type="file"
-          ref={fileInputRef}
+          ref={imageInputRef}
           style={{ display: 'none' }}
-          onChange={handleImageUpload}
+          onChange={handleImageInput}
         />
+
         <p onClick={() => alert('Button 2 clicked')}>
           <span>Online Link 🔗</span>
         </p>
         
-        <p onClick={handleButtonClick3}>
+        <p onClick={handleTextInput}>
           <span>Article Text 📝</span>
         </p>
+
       </div>
     </StyledWrapper>
   );

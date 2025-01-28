@@ -42,7 +42,7 @@ const Auth = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-    <form className="flex flex-col w-full max-w-sm space-y-4">
+    <form className="flex flex-col w-full max-w-sm space-y-4 px-10">
       <Input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Email" required />
       <Input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
       <div className="flex justify-center space-x-4">

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { API_URL } from '../api';
+import { api } from '../api';
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -18,31 +20,25 @@ const VideoPage = () => {
     const cacheBuster = new Date().getTime();
 
     if (type === 'demo') {
-      setVideoUrl(`http://localhost:8000/news/demo?cb=${cacheBuster}`);
+      setVideoUrl(`${API_URL}/news/demo?cb=${cacheBuster}`);
+      alert('Reel Generated!');
     }
     else {
       try {
-        const response = await fetch('http://localhost:8000/news/text', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ text: text }),
-        });
-        const blob = await response.blob();
-        const videoObjectUrl = URL.createObjectURL(blob);
+        alert('Generating Reel. Please wait...');
+        const response = await api.post('/news/text', { text }, { responseType: 'blob' });
+        const videoObjectUrl = URL.createObjectURL(response.data);
         setVideoUrl(videoObjectUrl);
+        alert('Reel Generated!');
+
       } catch (error) {
+        alert('ERROR');
         console.error('Error fetching video:', error);
       }
     }
 
     setShowReelPlayer(true);
   };
-
-  // const handleTextareaChange = (event) => {
-  //   setText(event.target.value);
-  // };
 
  // TODO set as url to vid uploaded in cloud  
   const shareUrl = window.location.href;
