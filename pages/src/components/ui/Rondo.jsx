@@ -61,12 +61,12 @@ const Rondo = () => {
 
 const StyledWrapper = styled.div`
   .rondo {
-    width: 250px;
+    width: 320px;
     height: 254px;
-    border-radius: 4px;
+    border-radius: 14px;
     background: rgba(33, 33, 33, 0.3); /* Set transparency here */
     display: flex;
-    gap: 4px;
+    gap: 8px;
     padding: 0.4em;
   }
 
@@ -75,10 +75,10 @@ const StyledWrapper = styled.div`
     flex: 1;
     overflow: hidden;
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: 10px;
     transition: all 0.5s;
     background: rgba(33, 33, 33, 0.01); /* Set transparency here */
-    border: 3px solid rgba(255, 255, 255, 0.8); /* Set transparency here */
+    border: 8px solid rgba(255, 255, 255, 0.8); /* Set transparency here */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,7 +95,8 @@ const StyledWrapper = styled.div`
     transform: rotate(-90deg);
     transition: all 0.5s;
     text-transform: none;
-    font-weight: 300;
+    font-weight: 400;
+    font-size: 1.1em;
     color: rgba(255, 255, 255, 0.8); /* Set transparency here */
     letter-spacing: 0.1em;
   }

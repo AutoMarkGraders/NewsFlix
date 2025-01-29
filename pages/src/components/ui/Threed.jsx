@@ -9,7 +9,7 @@ const Threed = ({ handleDemoClick }) => {
           <div className="content-box">
             <span className="card-title">Take a Demo</span>
             <p className="card-content">
-              Try out our AI powered NewsToReel converter by generating a reel from this news article!
+              Try our AI powered NewsToReel converter by generating a reel from this news article!
             </p>
             <span className="see-more" onClick={handleDemoClick}>generate</span>
           </div>
@@ -21,14 +21,14 @@ const Threed = ({ handleDemoClick }) => {
 
 const StyledWrapper = styled.div`
   .parent {
-    width: 400px;
+    width: 360px;
     padding: 20px;
     perspective: 1000px;
   }
 
   .card {
     padding: 10px;
-    border-radius: 4px;
+    border-radius: 14px;
     border: 3px solid rgb(255, 255, 255);
     transform-style: preserve-3d;
     background: linear-gradient(135deg,#0000 18.75%,#f3f3f3 0 31.25%,#0000 0),
@@ -50,7 +50,7 @@ const StyledWrapper = styled.div`
   .content-box {
     background: url('/article.png') no-repeat center center; /* Update this line */
     background-size: cover; /* Ensure the image covers the entire background */
-    border-radius: 2px;
+    border-radius: 7px;
     transition: all 0.5s ease-in-out;
     padding: 75px 25px 25px 25px;
     transform-style: preserve-3d;
@@ -86,11 +86,11 @@ const StyledWrapper = styled.div`
     cursor: pointer;
     margin-top: 1rem;
     display: inline-block;
-    font-weight: 800;
-    font-size: 12px;
+    font-weight: 400;
+    font-size: 18px;
     text-transform: uppercase;
     color: black;
-    /* border-radius: 5px; */
+    border-radius: 7px;
     color: white;
     background: rgb(32,32,32);
     padding: 0.5rem 0.7rem;

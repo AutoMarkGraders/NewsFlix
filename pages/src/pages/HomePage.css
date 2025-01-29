@@ -18,7 +18,7 @@
     font-size: 4vw;
     color: white;
 
-    border-bottom: solid black 1px; 
+    border-bottom: solid white 1px; 
 }
 
 #Demo {
@@ -26,7 +26,7 @@
 }
 
 #Left {
-    border-right: solid black 1px; 
+    border-right: solid white 1px; 
 }
 
 }
@@ -38,8 +38,7 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 3fr 3fr 3fr;
-    gap: 50px;
+    grid-template-rows: 1fr 3fr 3fr;
 }
 
 #Heading, #Demo, #Left {
@@ -51,15 +50,15 @@
 #Heading {
     font-size: 5vh;
     color: white;
-    border-bottom: solid black 1px; 
+    border-bottom: solid white 1px; 
 }
 
 #Demo {
-    border-bottom: solid black 1px; 
+    border-bottom: solid white 1px; 
 }
 
 #Left {
-    border-bottom: solid black 1px; 
+    border-bottom: solid white 1px; 
 }
 
 }
