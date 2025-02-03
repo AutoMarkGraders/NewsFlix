@@ -9,7 +9,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   const handleDemoClick = () => {
-    const demoArticle = "Slovenian handball team makes it to Paris Olympics semifinal Lille, 8 August - Slovenia defeated Norway 33:28 in the Olympic men's handball tournament in Lille late on Wednesday to advance to the semifinal where they will face Denmark on Friday evening. This is the best result the team has so far achieved at the Olympic Games and one of the best performances in the history of Slovenia's team sports squads.";
+    const demoArticle = "In recent years, there has been a growing global push to protect biodiversity as the impacts of habitat loss, pollution, and climate change drive species closer to extinction. Governments and organizations worldwide have launched initiatives to conserve biodiversity hotspots, restore damaged ecosystems, and establish new protected areas. The Kunming-Montreal Global Biodiversity Framework, adopted in 2022, aims to halt biodiversity loss by 2030, setting targets like protecting 30% of land and marine areas and restoring 20% of degraded ecosystems. Countries such as Brazil are intensifying efforts to reduce Amazon deforestation, while the U.S. has launched the “America the Beautiful” initiative to protect 30% of its lands and waters. In addition, corporations and NGOs are adopting sustainable practices and supporting reforestation projects. However, challenges such as funding, enforcement, and conflicting land-use priorities remain. Conservationists believe that a shift toward viewing ecological health as essential to economic resilience is crucial for achieving lasting impact.";
     navigate('/video', { state: { text: demoArticle, type: 'demo' } });
   };
 

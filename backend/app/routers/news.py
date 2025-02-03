@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile,
 from fastapi.responses import FileResponse, JSONResponse
 
 from .. import schemas
-#from ..database import get_db
 from .. import summarizer
 from .. import classifier
 from .. import generator
@@ -55,4 +54,4 @@ def text_to_reel(textInput: schemas.TextInput):
 
 @router.get("/demo", status_code=status.HTTP_201_CREATED)
 def demo():
-    return FileResponse("reel.mp4", media_type="video/mp4")
+    return FileResponse("demo.mp4", media_type="video/mp4")

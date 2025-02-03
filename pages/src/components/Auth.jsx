@@ -26,6 +26,7 @@ const Auth = () => {
       localStorage.setItem('token', response.data.access_token);
       navigate('/home');
     } catch (error) {
+      alert('ERROR');
       console.error('Error logging in:', error);
     }
   };
@@ -36,6 +37,7 @@ const Auth = () => {
       const response = await api.post('/users', { email: username, password });
       alert('User signed up successfully');
     } catch (error) {
+      alert('ERROR');
       console.error('Error signing up:', error);
     }
   };
