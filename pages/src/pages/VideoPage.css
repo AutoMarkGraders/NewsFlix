@@ -3,6 +3,10 @@
   font-size: 25px;
 }
 
+video {
+  border-radius: 10px;
+}
+
 #socials {
   margin-top: 15px;
   display: flex;
@@ -58,8 +62,8 @@ video {
   height: 30vh;
 }
 
-video {
+/* video {
   width: 70vw;
-}
+} */
 
 }     

@@ -5,7 +5,7 @@ import { api } from '../api';
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { FaWhatsapp, FaFacebook } from "react-icons/fa";
+import { FaWhatsapp, FaFacebook, FaLink} from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import './VideoPage.css';
 
@@ -73,9 +73,9 @@ const VideoPage = () => {
 
       <div id="rhs">
         {showReelPlayer && (
-          <div id="ReelPlayer">
+          <div className="grid">
 
-            <h2 className='headingg'>Generated Video:</h2>
+            <h2 className='headingg'>Generated News Reel</h2>
 
             <video controls>
               <source src={videoUrl} type="video/mp4" />
@@ -104,6 +104,14 @@ const VideoPage = () => {
                 style={{background: "none",border: "none",cursor: "pointer",fontSize: "40px",color: "#000",}}
               >
               <FaXTwitter />
+              </button>
+
+              {/* Copy Link Button */}
+              <button
+                onClick={() => { navigator.clipboard.writeText(shareUrl); alert('Reel sharable link copied!'); }}
+                style={{background: "white", border: "none", borderRadius: "50%", cursor: "pointer", fontSize: "25px", color: "#000", width: "40px", height: "40px", display: "flex", justifyContent: "center", alignItems: "center"}}
+              >
+              <FaLink />
               </button>
             </div>
 
