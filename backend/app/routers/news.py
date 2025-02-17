@@ -32,10 +32,11 @@ def image_to_text(image: UploadFile = File(...)):
 
 
 @router.post("/text", status_code=status.HTTP_201_CREATED)
-def text_to_reel(textInput: schemas.TextInput):
+def text_to_reel(input_data: schemas.TextInput):
         
     print("\nStarted!!!")
-    article = textInput.text
+    article = input_data.text
+    targetLanguage = input_data.language
     # insert article into table
 
     # SUMMARIZER
@@ -47,11 +48,12 @@ def text_to_reel(textInput: schemas.TextInput):
     print(f"\nCATEGORY:\n{category}")
 
     #vid gen
-    generator.generate(summary, category)
+    generator.generate(summary, category, targetLanguage)
 
     return FileResponse("reel.mp4", media_type="video/mp4")
 
 
 @router.get("/demo", status_code=status.HTTP_201_CREATED)
-def demo():
-    return FileResponse("demo.mp4", media_type="video/mp4")
+def demo(language: str):
+    demo_reel = f'demo_{language}.mp4'
+    return FileResponse(demo_reel, media_type="video/mp4")

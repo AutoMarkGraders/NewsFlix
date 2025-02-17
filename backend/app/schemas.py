@@ -1,9 +1,8 @@
 # Pydantic models for the request and response bodies of the API
 
 from pydantic import BaseModel, EmailStr, constr
-from pydantic.types import conint
 from datetime import datetime, date
-from typing import Optional, List
+from typing import Optional, Literal
 
 
 class UserCreate(BaseModel):
@@ -35,4 +34,4 @@ class TokenData(BaseModel):
 
 class TextInput(BaseModel):
     text: str
-
+    language: Literal["en", "hi", "ml"]
