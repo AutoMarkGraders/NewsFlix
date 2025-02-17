@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { api } from '../api';
 import { useNavigate } from 'react-router-dom';
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Auth = () => {
@@ -18,15 +20,13 @@ const Auth = () => {
       formData.append('password', password);
 
       const response = await api.post('/users/login', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        headers: {'Content-Type': 'multipart/form-data',},
       });
 
       localStorage.setItem('token', response.data.access_token);
       navigate('/home');
     } catch (error) {
-      alert('ERROR');
+      toast.error('ERROR');
       console.error('Error logging in:', error);
     }
   };
@@ -35,9 +35,9 @@ const Auth = () => {
     e.preventDefault();
     try {
       const response = await api.post('/users', { email: username, password });
-      alert('User signed up successfully');
+      toast.success('Sign-Up successful');
     } catch (error) {
-      alert('ERROR');
+      toast.error('ERROR');
       console.error('Error signing up:', error);
     }
   };
@@ -52,6 +52,7 @@ const Auth = () => {
         <Button variant="secondary" onClick={handleSignUp}>Sign Up</Button>
       </div>
     </form>
+    <ToastContainer position="top-center" autoClose={1000}/>
     </div>
   );
 };

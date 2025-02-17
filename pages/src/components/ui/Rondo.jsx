@@ -2,29 +2,31 @@ import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '@/api';
 import styled from "styled-components";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Rondo = () => {
   const navigate = useNavigate();
   const imageInputRef = useRef(null);
 
   const handleImageInput = async (event) => {
-    const image = event.target.files[0];
-    if (image) {
+    try {
+      const image = event.target.files[0];
+      if (!image || !image.type.startsWith('image/')) {
+        throw new Error('Please select an image file');
+      }
+      toast.info('Processing image. Please wait...', { autoClose: 15000 }); // 15 seconds
       const formData = new FormData();
       formData.append('image', image);
-      try {
-        alert('Processing image. Please wait...');
-        const response = await api.post('/news/image', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        const ocrText = response.data.text; // contains the text in a field named 'text'
-        navigate('/video', { state: { text: ocrText, type: 'notDemo' } });
-      } catch (error) {
-        alert('ERROR');
-        console.error('Error uploading file:', error);
-      }
+      const response = await api.post('/news/image', formData, {
+        headers: {'Content-Type': 'multipart/form-data',},
+      });
+      const ocrText = response.data.text; // contains the text in a field named 'text'
+      navigate('/video', { state: { text: ocrText, type: 'notDemo' } });
+
+    } catch (error) {
+      toast.error('ERROR');
+      console.error('Error uploading file:', error);
     }
   };
 
@@ -47,7 +49,7 @@ const Rondo = () => {
         />
 
         <p onClick={() => alert('Button 2 clicked')}>
-          <span>Online Link 🔗</span>
+          <span>Reel History 🔗</span>
         </p>
         
         <p onClick={handleTextInput}>
@@ -55,6 +57,7 @@ const Rondo = () => {
         </p>
 
       </div>
+      <ToastContainer />
     </StyledWrapper>
   );
 };
