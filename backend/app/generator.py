@@ -31,14 +31,14 @@ def generate(summary, category, language):
 
 # gtts and speed up 1.1x to get reel.mp3
     tts = gTTS(summary, lang=language)
-    tts.save("reeel.mp3")
-    audio = AudioSegment.from_file("reeel.mp3")
+    tts.save("outputs/reeel.mp3")
+    audio = AudioSegment.from_file("outputs/reeel.mp3")
     faster_audio = audio._spawn(audio.raw_data, overrides={"frame_rate": int(audio.frame_rate * 1.1)}).set_frame_rate(audio.frame_rate)
-    faster_audio.export("reel.mp3", format="mp3")
-    os.remove("reeel.mp3")
+    faster_audio.export("outputs/reel.mp3", format="mp3")
+    os.remove("outputs/reeel.mp3")
 
 # set duration as duration of reel.mp3
-    narration = mp.AudioFileClip("reel.mp3")
+    narration = mp.AudioFileClip("outputs/reel.mp3")
     duration = narration.duration
     print(f'\nDuration = {duration}')
 
@@ -58,7 +58,7 @@ def generate(summary, category, language):
     for i, photo in enumerate(response['photos'], start=1):
         image_url = photo['src']['original']
         img_data = requests.get(image_url).content
-        with open(f'{i}.jpg', 'wb') as handler: # saved in CWD (backend/)
+        with open(f'outputs/{i}.jpg', 'wb') as handler:
             handler.write(img_data)
     print(f'\nNo.of images = {n}\n')
 
@@ -68,7 +68,7 @@ def generate(summary, category, language):
     
     backgrounds = []
     for i in range(1, n + 1):
-        bg = mp.ImageClip(f"{i}.jpg").set_duration(7)
+        bg = mp.ImageClip(f'outputs/{i}.jpg').set_duration(7)
         # new width after resizing to maintain aspect ratio
         #image_width, image_height = bg.size
         #aspect_ratio = image_width / image_height
@@ -92,7 +92,7 @@ def generate(summary, category, language):
     chunks = {}
     if language == 'en':
         model = whisper.load_model("base")
-        transcription = model.transcribe("reel.mp3", word_timestamps=True)
+        transcription = model.transcribe("outputs/reel.mp3", word_timestamps=True)
         # for segment in transcription["segments"]:
         #     print(segment["text"])
 
@@ -159,7 +159,7 @@ def generate(summary, category, language):
 
     # Write the video file (1fps enough if no animation)
     half_time = time.time()
-    video.write_videofile("reel.mp4", fps=1)
+    video.write_videofile("outputs/reel.mp4", fps=1)
     end_time = time.time()
     print(f"Time taken to write reel.mp4 = {end_time - half_time} seconds\n")
     print(f"Total time taken to generate reel = {end_time - start_time} seconds\n")

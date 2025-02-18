@@ -1,12 +1,11 @@
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
 from fastapi.responses import FileResponse, JSONResponse
+import logging
 
 from .. import schemas
-from .. import summarizer
-from .. import classifier
-from .. import generator
 from .. import extractor
-import logging
+from .. import nlp
+from .. import generator
 
 router = APIRouter(
     prefix="/news",
@@ -40,20 +39,20 @@ def text_to_reel(input_data: schemas.TextInput):
     # insert article into table
 
     # SUMMARIZER
-    summary = summarizer.full_summarize(article)
+    summary = nlp.full_summarize(article)
     print(f"\nSUMMARY:\n{summary}")
 
     # CLASSIFIER
-    category = classifier.full_classify(summary)
+    category = nlp.full_classify(summary)
     print(f"\nCATEGORY:\n{category}")
 
     #vid gen
     generator.generate(summary, category, targetLanguage)
 
-    return FileResponse("reel.mp4", media_type="video/mp4")
+    return FileResponse("outputs/reel.mp4", media_type="video/mp4")
 
 
 @router.get("/demo", status_code=status.HTTP_201_CREATED)
 def demo(language: str):
-    demo_reel = f'demo_{language}.mp4'
+    demo_reel = f'outputs/demo_{language}.mp4'
     return FileResponse(demo_reel, media_type="video/mp4")
