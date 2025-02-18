@@ -28,7 +28,7 @@ const VideoPage = () => {
       if (type === 'demo') {
         const response = await api.get(`/news/demo?language=${language}`);
         setVideoUrl(`${API_URL}/news/demo?language=${language}&cb=${cacheBuster}`);
-        // setShareUrl
+        setShareUrl(`https://res.cloudinary.com/news-to-reel/video/upload/v1739814980/blob_${language}.mp4`);
         toast.dismiss(loadingToast);
         toast.success('Reel Generated!');
       }
@@ -129,7 +129,7 @@ const VideoPage = () => {
 
               {/* Copy Link Button */}
               <button
-                onClick={() => { navigator.clipboard.writeText(shareUrl); alert('Reel sharable link copied!'); }}
+                onClick={() => { navigator.clipboard.writeText(shareUrl); toast.info('Reel sharable link copied!'); }}
                 style={{background: "white", border: "none", borderRadius: "50%", cursor: "pointer", fontSize: "25px", color: "#000", width: "40px", height: "40px", display: "flex", justifyContent: "center", alignItems: "center"}}
               >
               <FaLink />

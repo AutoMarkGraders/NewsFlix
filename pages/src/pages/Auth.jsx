@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const Auth = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Auth from './components/Auth';
+import Auth from './pages/Auth';
 import HomePage from './pages/HomePage';
 import VideoPage from './pages/VideoPage';
 
