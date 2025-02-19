@@ -16,9 +16,6 @@ router = APIRouter(
 @router.post("/image", status_code=status.HTTP_201_CREATED)
 def image_to_text(image: UploadFile = File(...)):
     
-    print("\nStarted!!!")
-
-    # EXTRACTOR
     try:
         article = extractor.extract(image)
         print(f"\nARTICLE:\n{article}")

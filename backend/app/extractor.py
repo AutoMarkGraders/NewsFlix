@@ -6,7 +6,6 @@ import io
 # Configure Gemini API
 load_dotenv()
 genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-
 generation_config = {
     "temperature": 1,
     "top_p": 0.95,
@@ -14,7 +13,6 @@ generation_config = {
     "max_output_tokens": 8192,
     "response_mime_type": "text/plain",
 }
-
 model = genai.GenerativeModel(model_name="gemini-2.0-flash-exp", generation_config=generation_config,)
 
 
@@ -46,8 +44,8 @@ def extract(image):
         ]
     )
 
-    response = chat_session.send_message("Please process the image.")
     print("\nGemini extracting text.")
+    response = chat_session.send_message("Please process the image.")
     article = response.text
 
     return article
