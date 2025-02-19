@@ -8,13 +8,14 @@ import os
 from dotenv import load_dotenv
 from math import ceil
 import requests
+import random
 from gtts import gTTS
 from deep_translator import GoogleTranslator
 from keybert import KeyBERT
 from pydub import AudioSegment
 import whisper
 
-kb_model = KeyBERT() # load the model on app startup
+kb_model = KeyBERT() # load it on app startup
 
 def generate(summary, category, language):
     start_time = time.time()
@@ -26,8 +27,6 @@ def generate(summary, category, language):
     if language != 'en':
         summary = GoogleTranslator(source="auto", target=language).translate(summary)
         print("\nTranslated Summary:", summary)
-    # with open("translation.txt", "w", encoding="utf-8") as file:
-    #     file.write(summary)
 
 # gtts and speed up 1.1x to get reel.mp3
     tts = gTTS(summary, lang=language)
@@ -37,12 +36,14 @@ def generate(summary, category, language):
     faster_audio.export("outputs/reel.mp3", format="mp3")
     os.remove("outputs/reeel.mp3")
 
-# set duration as duration of reel.mp3
+# get duration and initialize video
     narration = mp.AudioFileClip("outputs/reel.mp3")
     duration = narration.duration
     print(f'\nDuration = {duration}')
-
-# fetch background images using keyphrase
+    width, height = 1080, 1920  # aspect ratio 9:16
+    video = mp.ColorClip(size=(width, height), color=(0, 0, 0), duration=0)
+    
+# fetch images using keyphrase
     print(f'\nKeyphrase = {keyphrase}')
     n = ceil(duration/7)
     load_dotenv()
@@ -63,53 +64,33 @@ def generate(summary, category, language):
     print(f'\nNo.of images = {n}\n')
 
 # set background images
-    width, height = 1080, 1920  # aspect ratio 9:16
-    video = mp.ColorClip(size=(width, height), color=(0, 0, 0), duration=0)
-    
     backgrounds = []
     for i in range(1, n + 1):
         bg = mp.ImageClip(f'outputs/{i}.jpg').set_duration(7)
-        # new width after resizing to maintain aspect ratio
-        #image_width, image_height = bg.size
-        #aspect_ratio = image_width / image_height
-        #new_width = int(aspect_ratio * height)
         bg = bg.resize(height=height)
-        # animation to move the image
-        #bg = bg.set_position(lambda t: ((width - new_width) * (t / 10), 0))
-
         backgrounds.append(bg)
-
+    random.shuffle(backgrounds)
     # fast but no animation
     background = mp.concatenate_videoclips(backgrounds)
     video = mp.CompositeVideoClip([background], size=(width, height))
 
-    # # slow but with animation
-    # for bg in backgrounds:
-    #     video = mp.CompositeVideoClip([video, bg.set_start(video.duration)], size=(width, height))
-
-# transcript
-    # Transcribe the audio with Whisper
+# find per-second caption chunks
     chunks = {}
+
+    # Transcribe using Whisper if english
     if language == 'en':
         model = whisper.load_model("base")
         transcription = model.transcribe("outputs/reel.mp3", word_timestamps=True)
-        # for segment in transcription["segments"]:
-        #     print(segment["text"])
-
         # turn it into per-second chunks
-        #chunks = {}
         last_word = None
         for segment in transcription["segments"]:
             words = segment.get("words", []) # returns [] if no words data in segment
-            
             for word in words:
                 word_start = word["start"]
                 word_end = word["end"]
                 word_text = word["word"]
-
                 if word_start is None or word_end is None:
                     continue
-
                 # Round timestamps to the nearest second
                 start_second = int(word_start)
                 end_second = int(word_end)
@@ -121,6 +102,7 @@ def generate(summary, category, language):
                         chunks[second].append(word_text)
                         last_word = word_text 
 
+    # Approximate the chunks if not english
     else:
         words = summary.split()
         word_duration = duration / len(words)
@@ -130,14 +112,14 @@ def generate(summary, category, language):
                 chunks[second] = []
             chunks[second].append(word)
 
-
+    # if there is no word for a second
     for second, words in (chunks.items()):
-        if words == []: words.append('....') # if there is no transcript for that second
+        if words == []: words.append('....')
         print(f"[{second}s]: {' '.join(words)}")
 
 # add captions
     lang_fonts = {"en": "C:/Windows/Fonts/ZILLASLABHIGHLIGHT-BOLD.ttf", "hi": "C:/Windows/Fonts/PRAGATINARROW-BOLD.ttf", "ml": "C:/Windows/Fonts/ANEKMALAYALAM-SEMIBOLD.ttf"}
-    # Create TextClips for each second
+    # Create a TextClip for each second
     text_clips = []
     for second, words in chunks.items():
         caption_text = ' '.join(words)
@@ -151,14 +133,12 @@ def generate(summary, category, language):
         )
         text = text.set_position(("center", video.h - 400)).set_duration(1).set_start(second)
         text_clips.append(text)
-
-    # Combine the video with the text clips
+    # Combine the video with the captions
     video = mp.CompositeVideoClip([video, *text_clips])
 
-    video = video.set_audio(narration)
-
-    # Write the video file (1fps enough if no animation)
+# write the video file (1fps enough if no animation)
     half_time = time.time()
+    video = video.set_audio(narration)
     video.write_videofile("outputs/reel.mp4", fps=1)
     end_time = time.time()
     print(f"Time taken to write reel.mp4 = {end_time - half_time} seconds\n")
