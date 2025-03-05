@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
 from fastapi.responses import FileResponse, JSONResponse
 import logging
+import requests
 
 from .. import schemas
 from .. import extractor
@@ -33,7 +34,6 @@ def text_to_reel(input_data: schemas.TextInput):
     print("\nStarted!!!")
     article = input_data.text
     targetLanguage = input_data.language
-    # insert article into table
 
     # SUMMARIZER
     summary = nlp.full_summarize(article)
@@ -46,7 +46,18 @@ def text_to_reel(input_data: schemas.TextInput):
     #vid gen
     generator.generate(summary, category, targetLanguage)
 
-    return FileResponse("outputs/reel.mp4", media_type="video/mp4")
+    # upload to cloudinary
+    data = {'upload_preset': 'upload_reels'}
+    files = {'file': open('outputs/reel.mp4', 'rb')}
+    response = requests.post('https://api.cloudinary.com/v1_1/news-to-reel/video/upload', data=data, files=files)
+    reel_url = response.json()['secure_url']
+    print(reel_url)
+
+    # insert data into table
+
+    return JSONResponse(content={"reel_url": reel_url}, status_code=status.HTTP_200_OK)
+
+    # return FileResponse("outputs/reel.mp4", media_type="video/mp4")
 
 
 @router.get("/demo", status_code=status.HTTP_201_CREATED)

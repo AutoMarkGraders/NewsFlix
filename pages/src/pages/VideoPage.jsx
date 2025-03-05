@@ -18,7 +18,7 @@ const VideoPage = () => {
   const [language, setLanguage] = useState('');
   const [showReelPlayer, setShowReelPlayer] = useState(false);
   const [videoUrl, setVideoUrl] = useState('');
-  const [shareUrl, setShareUrl] = useState('https://res.cloudinary.com/news-to-reel/video/upload/v1738601524/qmcggdivy9soww6farbb.mp4');
+  const [shareUrl, setShareUrl] = useState('');
 
   const handleGenerateClick = async () => {
 
@@ -26,30 +26,34 @@ const VideoPage = () => {
     let loadingToast;
     try {
       if (type === 'demo') {
-        const response = await api.get(`/news/demo?language=${language}`);
-        setVideoUrl(`${API_URL}/news/demo?language=${language}&cb=${cacheBuster}`);
-        setShareUrl(`https://res.cloudinary.com/news-to-reel/video/upload/v1739814980/blob_${language}.mp4`);
+        // const response = await api.get(`/news/demo?language=${language}`);
+        // setVideoUrl(`${API_URL}/news/demo?language=${language}&cb=${cacheBuster}`);
+        const demoUrl = `https://res.cloudinary.com/news-to-reel/video/upload/v1739814980/blob_${language}.mp4`;
+        setVideoUrl(demoUrl);
+        setShareUrl(demoUrl);
         toast.dismiss(loadingToast);
         toast.success('Reel Generated!');
       }
       else {
         loadingToast = toast.info('Generating Reel. Please wait...', { autoClose: 80000 }); // 80 seconds
-        const response = await api.post('/news/text', { text, language }, { responseType: 'blob' });
-        const blob = response.data;
-        const videoObjectUrl = URL.createObjectURL(blob);
-        setVideoUrl(videoObjectUrl);
+        // const response = await api.post('/news/text', { text, language }, { responseType: 'blob' });
+        // const blob = response.data;
+        // const videoObjectUrl = URL.createObjectURL(blob);
+        const response = await api.post('/news/text', { text, language },);
+        const reel_url = response.data.reel_url;
+        setVideoUrl(reel_url);
 
-        // Upload the video to Cloudinary
-        const formData = new FormData();
-        formData.append('file', blob);
-        formData.append('upload_preset', 'upload_reels');
+        // // Upload the video to Cloudinary
+        // const formData = new FormData();
+        // formData.append('file', blob);
+        // formData.append('upload_preset', 'upload_reels');
 
-        const cloudinaryResponse = await fetch(`https://api.cloudinary.com/v1_1/news-to-reel/video/upload`,
-          {method: 'POST', body: formData,}
-        );
+        // const cloudinaryResponse = await fetch(`https://api.cloudinary.com/v1_1/news-to-reel/video/upload`,
+        //   {method: 'POST', body: formData,}
+        // );
 
-        const cloudinaryData = await cloudinaryResponse.json();
-        setShareUrl(cloudinaryData.secure_url);
+        // const cloudinaryData = await cloudinaryResponse.json();
+        setShareUrl(reel_url);
 
         toast.dismiss(loadingToast);
         toast.success('Reel Generated!'); 
