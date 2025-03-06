@@ -3,10 +3,9 @@ from fastapi.responses import FileResponse, JSONResponse
 import logging
 import requests
 
-from .. import schemas
-from .. import extractor
-from .. import nlp
-from .. import generator
+from ..database import conn, cursor
+from .. import schemas, oauth2
+from .. import extractor, nlp, generator
 
 router = APIRouter(
     prefix="/news",
@@ -29,7 +28,7 @@ def image_to_text(image: UploadFile = File(...)):
 
 
 @router.post("/text", status_code=status.HTTP_201_CREATED)
-def text_to_reel(input_data: schemas.TextInput):
+def text_to_reel(input_data: schemas.TextInput, current_user: int = Depends(oauth2.get_current_user)):
         
     print("\nStarted!!!")
     article = input_data.text
@@ -51,16 +50,22 @@ def text_to_reel(input_data: schemas.TextInput):
     files = {'file': open('outputs/reel.mp4', 'rb')}
     response = requests.post('https://api.cloudinary.com/v1_1/news-to-reel/video/upload', data=data, files=files)
     reel_url = response.json()['secure_url']
-    print(reel_url)
+    print(f"\REEL_URL:\n{reel_url}")
 
     # insert data into table
+    try:
+        cursor.execute("""INSERT INTO reels (owner_id, article, lang, summary, category, reel_url) VALUES (%s, %s, %s, %s, %s, %s) RETURNING *""", (current_user, article, targetLanguage, summary, category, reel_url))
+        new_reel = cursor.fetchone()
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise HTTPException(status_code=500, detail="server error")
 
     return JSONResponse(content={"reel_url": reel_url}, status_code=status.HTTP_200_OK)
 
-    # return FileResponse("outputs/reel.mp4", media_type="video/mp4")
 
-
-@router.get("/demo", status_code=status.HTTP_201_CREATED)
-def demo(language: str):
-    demo_reel = f'outputs/demo_{language}.mp4'
-    return FileResponse(demo_reel, media_type="video/mp4")
+# # handled in frontend
+# @router.get("/demo", status_code=status.HTTP_201_CREATED)
+# def demo(language: str):
+#     demo_reel = f'outputs/demo_{language}.mp4'
+#     return FileResponse(demo_reel, media_type="video/mp4")

@@ -19,3 +19,9 @@ def full_classify(text):
     result = classifier(text)
     return result[0]['label'] #only contain a list of dict len(list)=1 hence [0]. then result as dict we only need label
 
+    '''
+    labels_map={0: 'education', 1: 'human interest', 2: 'society', 3: 'sport', 4: 'crime, law and justice',
+    5: 'disaster, accident and emergency incident', 6: 'arts, culture, entertainment and media',
+    7: 'politics', 8: 'economy, business and finance', 9: 'lifestyle and leisure', 10: 'science and technology',
+    11: 'health', 12: 'labour', 13: 'religion', 14: 'weather', 15: 'environment', 16: 'conflict, war and peace'}'
+    '''

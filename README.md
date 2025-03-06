@@ -47,6 +47,29 @@ cd news-to-reel
         OWNER to postgres; 
     ```
 
+    ```bash
+    CREATE TABLE IF NOT EXISTS public.reels
+    (
+        id serial NOT NULL,
+        owner_id integer NOT NULL,
+        article text NOT NULL,
+        lang character(2) NOT NULL,
+        summary text NOT NULL,
+        category character varying(50) NOT NULL,
+        keywords text,
+        reel_url text NOT NULL,
+        created_at timestamp with time zone NOT NULL DEFAULT now(),
+        CONSTRAINT reels_pkey PRIMARY KEY (id),
+        CONSTRAINT reels_owners_fkey FOREIGN KEY (owner_id)
+            REFERENCES public.users (id) MATCH SIMPLE
+            ON UPDATE NO ACTION
+            ON DELETE CASCADE
+    )
+    TABLESPACE pg_default;
+    ALTER TABLE IF EXISTS public.reels
+        OWNER to postgres;
+    ```
+
 ### 3. Back-end
 
 - **Python**: Download and install a version between 3.8 and 3.11 from [Python.org](https://python.org/). Check Python & pip installation:
