@@ -50,7 +50,7 @@ def text_to_reel(input_data: schemas.TextInput, current_user: int = Depends(oaut
     files = {'file': open('outputs/reel.mp4', 'rb')}
     response = requests.post('https://api.cloudinary.com/v1_1/news-to-reel/video/upload', data=data, files=files)
     reel_url = response.json()['secure_url']
-    print(f"\REEL_URL:\n{reel_url}")
+    print(f"REEL_URL:\n{reel_url}")
 
     # insert data into table
     try:

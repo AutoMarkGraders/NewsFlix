@@ -39,7 +39,7 @@ const Rondo = () => {
       <div className="rondo">
 
         <p onClick={() => imageInputRef.current.click()}>
-          <span>News Image 📰</span>
+          <span>News File 📰</span>
         </p>
         <input
           type="file"
@@ -48,14 +48,14 @@ const Rondo = () => {
           onChange={handleImageInput}
         />
 
-        <p onClick={() => alert('Button 2 clicked')}>
-          <span>Reel History 🔗</span>
-        </p>
-        
         <p onClick={handleTextInput}>
-          <span>Article Text 📝</span>
+          <span>Article Link 🔗</span>
         </p>
 
+        <p onClick={() => alert('Button 3 clicked')}>
+          <span>Reel History 💾</span>
+        </p>
+        
       </div>
       <ToastContainer />
     </StyledWrapper>

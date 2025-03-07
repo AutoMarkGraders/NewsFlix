@@ -17,51 +17,27 @@ const VideoPage = () => {
   const [text, setText] = useState(initialText);
   const [language, setLanguage] = useState('');
   const [showReelPlayer, setShowReelPlayer] = useState(false);
-  const [videoUrl, setVideoUrl] = useState('');
-  const [shareUrl, setShareUrl] = useState('');
+  const [reelUrl, setReelUrl] = useState('');
 
   const handleGenerateClick = async () => {
-
-    const cacheBuster = new Date().getTime();
+    //const cacheBuster = new Date().getTime();
     let loadingToast;
     try {
       if (type === 'demo') {
-        // const response = await api.get(`/news/demo?language=${language}`);
-        // setVideoUrl(`${API_URL}/news/demo?language=${language}&cb=${cacheBuster}`);
-        const demoUrl = `https://res.cloudinary.com/news-to-reel/video/upload/v1739814980/blob_${language}.mp4`;
-        setVideoUrl(demoUrl);
-        setShareUrl(demoUrl);
+        setReelUrl(`https://res.cloudinary.com/news-to-reel/video/upload/v1739814980/blob_${language}.mp4`);
         toast.dismiss(loadingToast);
         toast.success('Reel Generated!');
       }
       else {
         loadingToast = toast.info('Generating Reel. Please wait...', { autoClose: 80000 }); // 80 seconds
-        // const response = await api.post('/news/text', { text, language }, { responseType: 'blob' });
-        // const blob = response.data;
-        // const videoObjectUrl = URL.createObjectURL(blob);
         const response = await api.post('/news/text', { text, language },);
-        const reel_url = response.data.reel_url;
-        setVideoUrl(reel_url);
-
-        // // Upload the video to Cloudinary
-        // const formData = new FormData();
-        // formData.append('file', blob);
-        // formData.append('upload_preset', 'upload_reels');
-
-        // const cloudinaryResponse = await fetch(`https://api.cloudinary.com/v1_1/news-to-reel/video/upload`,
-        //   {method: 'POST', body: formData,}
-        // );
-
-        // const cloudinaryData = await cloudinaryResponse.json();
-        setShareUrl(reel_url);
-
+        setReelUrl(response.data.reel_url);
         toast.dismiss(loadingToast);
         toast.success('Reel Generated!'); 
       }
-
       setShowReelPlayer(true);
-    
-    } catch (error) {
+    }
+    catch (error) {
         toast.dismiss(loadingToast);
         toast.error('ERROR');
         console.error('Error fetching video:', error);
@@ -102,14 +78,14 @@ const VideoPage = () => {
 
             <h2 className='headingg'>Generated News Reel</h2>
 
-            <video key={videoUrl} src={videoUrl} controls>
-              <source src={videoUrl} type="video/mp4" />
+            <video key={reelUrl} src={reelUrl} controls>
+              <source src={reelUrl} type="video/mp4" />
             </video>
 
             <div id='socials'>
               {/* Facebook Button */}
               <button
-                onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`, "_blank")}
+                onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${reelUrl}`, "_blank")}
                 style={{background: "white",border: "none",borderRadius: "50%",cursor: "pointer",fontSize: "40px",color: "#4267B2",}}
               >
               <FaFacebook />
@@ -117,7 +93,7 @@ const VideoPage = () => {
 
               {/* WhatsApp Button */}
               <button
-                onClick={() => window.open(`https://wa.me/?text=Check out this AI powered video generated using NewsToReel: ${shareUrl}`, "_blank")}
+                onClick={() => window.open(`https://wa.me/?text=Check out this AI powered video generated using NewsToReel: ${reelUrl}`, "_blank")}
                 style={{background: "none",border: "none",cursor: "pointer",fontSize: "40px",color: "#25D366",}}
               >
               <FaWhatsapp />
@@ -125,7 +101,7 @@ const VideoPage = () => {
 
               {/* Twitter Button */}
               <button
-                onClick={() => window.open(`https://twitter.com/intent/tweet?url=${shareUrl}&text=Check out this AI powered video generated using NewsToReel!`, "_blank")}
+                onClick={() => window.open(`https://twitter.com/intent/tweet?url=${reelUrl}&text=Check out this AI powered video generated using NewsToReel!`, "_blank")}
                 style={{background: "none",border: "none",cursor: "pointer",fontSize: "40px",color: "#000",}}
               >
               <FaXTwitter />
@@ -133,7 +109,7 @@ const VideoPage = () => {
 
               {/* Copy Link Button */}
               <button
-                onClick={() => { navigator.clipboard.writeText(shareUrl); toast.info('Reel sharable link copied!'); }}
+                onClick={() => { navigator.clipboard.writeText(reelUrl); toast.info('Reel share link copied!'); }}
                 style={{background: "white", border: "none", borderRadius: "50%", cursor: "pointer", fontSize: "25px", color: "#000", width: "40px", height: "40px", display: "flex", justifyContent: "center", alignItems: "center"}}
               >
               <FaLink />
