@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Auth from './pages/Auth';
 import HomePage from './pages/HomePage';
 import VideoPage from './pages/VideoPage';
+import HistoryPage from './pages/HistoryPage';
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
         <Route path="/" element={<Auth />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/video" element={<VideoPage />} />
+        <Route path="/history" element={<HistoryPage />} />
       </Routes>
     </Router>
   );

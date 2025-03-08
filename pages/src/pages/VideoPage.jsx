@@ -63,8 +63,8 @@ const VideoPage = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="en">English</SelectItem>
-              <SelectItem value="hi">Hindi</SelectItem>
-              <SelectItem value="ml">Malayalam</SelectItem>
+              <SelectItem value="hi">हिन्दी</SelectItem>
+              <SelectItem value="ml">മലയാളം</SelectItem>
             </SelectContent>
           </Select>
 

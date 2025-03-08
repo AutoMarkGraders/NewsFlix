@@ -52,7 +52,7 @@ const Rondo = () => {
           <span>Article Link 🔗</span>
         </p>
 
-        <p onClick={() => alert('Button 3 clicked')}>
+        <p onClick={() => navigate('/history')}>
           <span>Reel History 💾</span>
         </p>
         
