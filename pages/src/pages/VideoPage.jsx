@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { API_URL } from '../api';
 import { api } from '../api';
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select"
@@ -25,16 +24,14 @@ const VideoPage = () => {
     try {
       if (type === 'demo') {
         setReelUrl(`https://res.cloudinary.com/news-to-reel/video/upload/v1739814980/blob_${language}.mp4`);
-        toast.dismiss(loadingToast);
-        toast.success('Reel Generated!');
       }
       else {
         loadingToast = toast.info('Generating Reel. Please wait...', { autoClose: 80000 }); // 80 seconds
         const response = await api.post('/news/text', { text, language },);
         setReelUrl(response.data.reel_url);
-        toast.dismiss(loadingToast);
-        toast.success('Reel Generated!'); 
       }
+      toast.dismiss(loadingToast);
+      toast.success('Reel Generated!'); 
       setShowReelPlayer(true);
     }
     catch (error) {

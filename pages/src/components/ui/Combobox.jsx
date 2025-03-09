@@ -79,7 +79,7 @@ const categories = [
     },
 ]
 
-export function Combobox() {
+export function Combobox({ onSelect}) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
 
@@ -94,7 +94,7 @@ export function Combobox() {
         >
           {value
             ? categories.find((category) => category.value === value)?.label
-            : "Select Category"}
+            : "All Categories"}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -102,22 +102,23 @@ export function Combobox() {
         <Command>
           <CommandInput placeholder="Search category" />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>No category found.</CommandEmpty>
             <CommandGroup>
-              {categories.map((framework) => (
+              {categories.map((category) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
+                  key={category.value}
+                  value={category.value}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue)
                     setOpen(false)
+                    onSelect(currentValue === value ? "" : currentValue)
                   }}
                 >
-                  {framework.label}
+                  {category.label}
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === framework.value ? "opacity-100" : "opacity-0"
+                      value === category.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>
