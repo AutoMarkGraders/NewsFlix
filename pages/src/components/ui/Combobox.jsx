@@ -1,83 +1,81 @@
 "use client"
-
 import * as React from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
-
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList,} from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
 
 const categories = [
-    {
-        value: "disaster, accident and emergency incident",
-        label: "Disaster & accident",
-    },
-    {
-        value: "human interest",
-        label: "Human interest",
-    },
-    {
-        value: "politics",
-        label: "Politics",
-    },
-    {
-        value: "education",
-        label: "Education",
-    },
-    {
-        value: "crime, law and justice",
-        label: "Crime, law & justice",
-    },
-    {
-        value: "economy, business and finance",
-        label: "Economy, business & finance",
-    },
-    {
-        value: "conflict, war and peace",
-        label: "Conflict, war & peace",
-    },
-    {
-        value: "arts, culture, entertainment and media",
-        label: "Arts, culture & media",
-    },
-    {
-        value: "labour",
-        label: "Labour",
-    },
-    {
-        value: "weather",
-        label: "Weather",
-    },
-    {
-        value: "religion",
-        label: "Religion",
-    },
-    {
-        value: "society",
-        label: "Society",
-    },
-    {
-        value: "health",
-        label: "Health",
-    },
-    {
-        value: "environment",
-        label: "Environment",
-    },
-    {
-        value: "lifestyle and leisure",
-        label: "Lifestyle and leisure",
-    },
-    {
-        value: "science and technology",
-        label: "Science and technology",
-    },
-    {
-        value: "sport",
-        label: "Sport",
-    },
-]
+  {
+    value: "disaster, accident and emergency incident",
+    label: "Disaster & accident",
+  },
+  {
+    value: "human interest",
+    label: "Human interest",
+  },
+  {
+    value: "politics",
+    label: "Politics",
+  },
+  {
+    value: "education",
+    label: "Education",
+  },
+  {
+    value: "crime, law and justice",
+    label: "Crime, law & justice",
+  },
+  {
+    value: "economy, business and finance",
+    label: "Economy, business & finance",
+  },
+  {
+    value: "conflict, war and peace",
+    label: "Conflict, war & peace",
+  },
+  {
+    value: "arts, culture, entertainment and media",
+    label: "Arts, culture & media",
+  },
+  {
+    value: "labour",
+    label: "Labour",
+  },
+  {
+    value: "weather",
+    label: "Weather",
+  },
+  {
+    value: "religion",
+    label: "Religion",
+  },
+  {
+    value: "society",
+    label: "Society",
+  },
+  {
+    value: "health",
+    label: "Health",
+  },
+  {
+    value: "environment",
+    label: "Environment",
+  },
+  {
+    value: "lifestyle and leisure",
+    label: "Lifestyle and leisure",
+  },
+  {
+    value: "science and technology",
+    label: "Science and technology",
+  },
+  {
+    value: "sport",
+    label: "Sport",
+  },
+];
 
 export function Combobox({ onSelect}) {
   const [open, setOpen] = React.useState(false)

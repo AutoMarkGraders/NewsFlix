@@ -21,6 +21,10 @@ const VideoPage = () => {
   const handleGenerateClick = async () => {
     //const cacheBuster = new Date().getTime();
     let loadingToast;
+    if (language === "") {
+      toast.error("Please select a language!");
+      return;
+    }
     try {
       if (type === 'demo') {
         setReelUrl(`https://res.cloudinary.com/news-to-reel/video/upload/v1739814980/blob_${language}.mp4`);
@@ -45,7 +49,7 @@ const VideoPage = () => {
   return (
     <div id="vp-container">
 
-      <div id="lhs">
+      <div className="side">
         <div className="grid w-full gap-2">
           <h2 className='headingg'>Preview the News Article</h2>
           <Textarea id="article"
@@ -69,7 +73,7 @@ const VideoPage = () => {
         </div>
       </div>
 
-      <div id="rhs">
+      <div className="side">
         {showReelPlayer && (
           <div className="grid">
 
