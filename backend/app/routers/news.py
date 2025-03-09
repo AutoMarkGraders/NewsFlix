@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
 from fastapi.responses import FileResponse, JSONResponse
+from fastapi.encoders import jsonable_encoder
 import logging
 import requests
 
@@ -63,6 +64,30 @@ def text_to_reel(input_data: schemas.TextInput, current_user: int = Depends(oaut
 
     return JSONResponse(content={"reel_url": reel_url}, status_code=status.HTTP_200_OK)
 
+
+@router.post("/history", status_code=status.HTTP_200_OK)
+def fetch_reels(filters: schemas.Filter, current_user: int = Depends(oauth2.get_current_user)):
+    try:
+        query = "SELECT * FROM reels WHERE owner_id = %s"
+        params = [current_user]
+
+        query += " AND lang = ANY(%s)"
+        params.append(filters.languages)
+        
+        if filters.category:
+            query += " AND category = %s"
+            params.append(filters.category)
+
+        cursor.execute(query, params)
+        reels = cursor.fetchall()
+
+        reels = jsonable_encoder(reels)
+
+    except Exception as e:
+        logging.error(f"Error fetching history: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal server error.")
+    
+    return JSONResponse(content={"reels": reels}, status_code=status.HTTP_200_OK)
 
 # # handled in frontend
 # @router.get("/demo", status_code=status.HTTP_201_CREATED)

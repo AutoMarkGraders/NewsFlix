@@ -2,7 +2,7 @@
 
 from pydantic import BaseModel, EmailStr, constr
 from datetime import datetime, date
-from typing import Optional, Literal
+from typing import Optional, Literal, List
 
 
 class UserCreate(BaseModel):
@@ -30,8 +30,10 @@ class TokenData(BaseModel):
     id: Optional[int] = None
 
 
-
-
 class TextInput(BaseModel):
     text: str
     language: Literal["en", "hi", "ml"]
+
+class Filter(BaseModel):
+    languages: Optional[List[str]]
+    category: Optional[str]
