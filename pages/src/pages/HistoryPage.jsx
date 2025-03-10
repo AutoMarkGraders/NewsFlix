@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Combobox } from '@/components/ui/Combobox';
 import { ToastContainer, toast } from "react-toastify";
 import Reel from '@/components/ui/Reel';
-
 import './HistoryPage.css';
 
 const HistoryPage = () => {

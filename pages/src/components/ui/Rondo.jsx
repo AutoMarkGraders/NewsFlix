@@ -18,9 +18,7 @@ const Rondo = () => {
       toast.info('Processing image. Please wait...', { autoClose: 15000 }); // 15 seconds
       const formData = new FormData();
       formData.append('image', image);
-      const response = await api.post('/news/image', formData, {
-        headers: {'Content-Type': 'multipart/form-data',},
-      });
+      const response = await api.post('/news/image', formData, { headers: {'Content-Type': 'multipart/form-data',}, });
       const ocrText = response.data.text; // contains the text in a field named 'text'
       navigate('/video', { state: { text: ocrText, type: 'notDemo' } });
 
@@ -49,7 +47,7 @@ const Rondo = () => {
         />
 
         <p onClick={handleTextInput}>
-          <span>Article Link 🔗</span>
+          <span>Article Text 📝</span>
         </p>
 
         <p onClick={() => navigate('/history')}>

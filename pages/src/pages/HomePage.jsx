@@ -19,7 +19,7 @@ const HomePage = () => {
       <div id="HomePage">
 
         <div id="Heading">
-          <h1>NEWS TO REEL</h1>
+          <h1>NewsToReel</h1>
         </div>
 
         <div id="Demo">
