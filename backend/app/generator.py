@@ -118,7 +118,7 @@ def generate(summary, category, language):
         print(f"[{second}s]: {' '.join(words)}")
 
 # add captions
-    lang_fonts = {"en": "C:/Windows/Fonts/ZILLASLABHIGHLIGHT-BOLD.ttf", "hi": "C:/Windows/Fonts/PRAGATINARROW-BOLD.ttf", "ml": "C:/Windows/Fonts/ANEKMALAYALAM-SEMIBOLD.ttf"}
+    lang_fonts = {"en": "Arial-Bold", "hi": "C:/Windows/Fonts/PRAGATINARROW-BOLD.ttf", "ml": "C:/Windows/Fonts/ANEKMALAYALAM-SEMIBOLD.ttf"}
     # Create a TextClip for each second
     text_clips = []
     for second, words in chunks.items():
@@ -126,10 +126,11 @@ def generate(summary, category, language):
         text = TextClip(
             caption_text,
             fontsize=70, 
-            color="white",
+            color="yellow",
             font=lang_fonts[language],
             stroke_color="black",
-            stroke_width=2
+            stroke_width=2,
+            bg_color="white"
         )
         text = text.set_position(("center", video.h - 400)).set_duration(1).set_start(second)
         text_clips.append(text)
