@@ -12,6 +12,7 @@ def full_summarize(input_text):
     return summary[0]['summary_text']
 
 def full_classify(text):
+    #model_name = "classla/multilingual-IPTC-news-topic-classifier"
     save_directory = "saved_classifier"
     model = AutoModelForSequenceClassification.from_pretrained(save_directory)
     tokenizer = AutoTokenizer.from_pretrained(save_directory)
