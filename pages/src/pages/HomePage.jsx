@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import Threed from '../components/ui/Threed';
-import Rondo from '../components/ui/Rondo';
+import Threed from '@/components/ui/Threed';
+import Rondo from '@/components/ui/Rondo';
 
 import './HomePage.css'
 

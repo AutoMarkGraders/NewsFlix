@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { api } from '../api';
+import { api } from '@/api';
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { Button } from "@/components/ui/button";
 import { Combobox } from '@/components/ui/Combobox';
