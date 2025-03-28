@@ -25,7 +25,7 @@ const Rondo = () => {
         const reader = new FileReader();
         reader.onload = (e) => {
           const pdfData = e.target.result;
-          navigate('/pdf-processing', { state: { pdfData, fileName: file.name } });
+          navigate('/pdf', { state: { pdfData, fileName: file.name } });
         };
         reader.readAsArrayBuffer(file);
       }
@@ -51,6 +51,7 @@ const Rondo = () => {
         </p>
         <input
           type="file"
+          accept="image/*,application/pdf"
           ref={fileInputRef}
           style={{ display: 'none' }}
           onChange={handleFileInput}

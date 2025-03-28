@@ -2,9 +2,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 import styled from 'styled-components';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import Slider from 'react-slick';
 import Modal from 'react-modal';
+import { Button } from "@/components/ui/button";
+import { api } from '@/api';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -118,9 +120,26 @@ const PdfProcessing = () => {
     setCroppedImage(canvas.toDataURL('image/png'));
   };
 
+  const handleProceed = async () => {
+    try {
+      toast.info('Processing image. Please wait...', { autoClose: 15000 });  
+      const blob = await (await fetch(croppedImage)).blob();
+      const file = new File([blob], 'cropped-image.png', { type: 'image/png' });  
+      const formData = new FormData();
+      formData.append('image', file);
+      const response = await api.post('/news/image', formData, { headers: { 'Content-Type': 'multipart/form-data' },});
+      const ocrText = response.data.text;  
+      navigate('/video', { state: { text: ocrText, type: 'notDemo' } });
+    }
+    catch (error) {
+      toast.error('ERROR');
+      console.error('Image processing error:', error);
+    }
+  };
+
   return (
     <StyledContainer>
-      <h2>Viewing: {fileName}</h2>
+      {/* <h2>Viewing: {fileName}</h2> */}
       <SliderContainer>
         <Slider dots={true} infinite={false} speed={500} slidesToShow={3} slidesToScroll={1}>
           {images.map((imageSrc, index) => (
@@ -132,46 +151,34 @@ const PdfProcessing = () => {
       </SliderContainer>
 
       <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
-        <CloseButton onClick={() => setModalIsOpen(false)}>✖</CloseButton>
-        <h3>Zoom & Crop</h3>
-        <CropContainer onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
+        <Button onClick={() => setModalIsOpen(false)} className="absolute top-2 right-2" variant="destructive">✖</Button>
+        {/* <h3>Zoom & Crop</h3> */}
+
+        <CropContainer onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} style={{ marginTop: '40px' }}>
           <img ref={imageRef} src={selectedImage} alt="Zoomed" style={{ width: '100%', height: 'auto' }} />
           {cropBox && (
             <CropOverlay style={{ left: cropBox.x, top: cropBox.y, width: cropBox.width, height: cropBox.height }} />
           )}
         </CropContainer>
-        <CropButton onClick={cropImage}>Crop</CropButton>
-        {croppedImage && <CroppedImage src={croppedImage} alt="Cropped" />}
+
+        <Button onClick={cropImage} className="mt-4">Crop</Button>
+        {croppedImage && (
+          <>
+            <CroppedImage src={croppedImage} alt="Cropped" />
+            <Button onClick={handleProceed} className="mt-4">Proceed</Button>
+          </>
+        )}
       </Modal>
+      <ToastContainer />
     </StyledContainer>
   );
 };
 
-const StyledContainer = styled.div` text-align: center; padding: 10px; `;
+const StyledContainer = styled.div` padding: 80px; `;
 const SliderContainer = styled.div` margin: 10px auto; width: 90%; max-width: 1200px; `;
 const ImageSlide = styled.div` text-align: center; padding: 5px; cursor: pointer; `;
 const CropContainer = styled.div` position: relative; width: 100%; height: auto; background: #000; `;
-const CropOverlay = styled.div` position: absolute; border: 2px dashed red; background: rgba(255, 0, 0, 0.2); `;
-const CloseButton = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: red;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  font-size: 18px;
-  cursor: pointer;
-  border-radius: 50%;
-  z-index: 1000;
-  transition: background 0.3s;
-
-  &:hover {
-    background: darkred;
-  }
-`;
-
-const CropButton = styled.button` margin-top: 10px; padding: 10px; background: #28a745; color: white; border: none; cursor: pointer; `;
-const CroppedImage = styled.img` display: block; margin-top: 10px; max-width: 100%; border: 2px solid #007bff; `;
+const CropOverlay = styled.div` position: absolute; border: 2px dashed blue; background: rgba(112, 199, 240, 0.2); `;
+const CroppedImage = styled.img` display: block; margin: 10px auto; width: 50%; max-width: none; border: 2px solid blue; `;
 
 export default PdfProcessing;
