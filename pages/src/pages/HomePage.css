@@ -14,11 +14,11 @@
     align-items: center;
 }
 
-#Heading {
-    font-size: 4vw;
-    color: white;
-
-    border-bottom: solid white 1px; 
+#Heading img{
+    /* font-size: 4vw;
+    color: white; 
+    border-bottom: solid white 1px; */
+    width: 20vw;
 }
 
 #Demo {
@@ -26,6 +26,7 @@
 }
 
 #Left {
+    border-top: solid white 1px;
     border-right: solid white 1px; 
 }
 
@@ -47,14 +48,16 @@
     align-items: center;
 }
 
-#Heading {
-    font-size: 5vh;
-    color: white;
-    border-bottom: solid white 1px; 
+#Heading img {
+    /* font-size: 5vh;
+    color: white; 
+    border-bottom: solid white 1px; */
+    width: 80vw;
 }
 
 #Demo {
-    border-bottom: solid white 1px; 
+    border-top: solid white 1px;
+    /* border-bottom: solid white 1px;  */
 }
 
 #Left {

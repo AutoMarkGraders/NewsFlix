@@ -18,14 +18,6 @@ model = genai.GenerativeModel(model_name="gemini-2.0-flash-exp", generation_conf
 
 def extract(image):
 
-            # # Save the uploaded image file
-        # image_path = "uploaded_image.jpg"
-        # with open(image_path, "wb") as buffer:
-        #     buffer.write(image.file.read())
-        # # Upload the image to Gemini
-        # uploaded_file = genai.upload_file(image_path, mime_type="image/jpeg")
-        # print(f"Uploaded file '{uploaded_file.display_name}' as: {uploaded_file.uri}")
-
     # Upload the image to Gemini directly from memory
     image_data = image.file.read()
     image_file = io.BytesIO(image_data)

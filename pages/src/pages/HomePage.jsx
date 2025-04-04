@@ -19,7 +19,8 @@ const HomePage = () => {
       <div id="HomePage">
 
         <div id="Heading">
-          <h1>NewsToReel</h1>
+          {/* <h1>NewsFlix</h1> */}
+          <img src="heading.webp" alt="NewsFlix" />
         </div>
 
         <div id="Demo">
