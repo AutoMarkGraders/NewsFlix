@@ -3,6 +3,7 @@
 [0-9]*.png
 *.mp4
 !demo*.mp4
+!reel*.mp4
 *.mp3
 
 # pages

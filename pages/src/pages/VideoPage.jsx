@@ -27,7 +27,12 @@ const VideoPage = () => {
     }
     try {
       if (type === 'demo') {
-        setReelUrl(`https://res.cloudinary.com/news-to-reel/video/upload/v1739814980/blob_${language}.mp4`);
+        if (language === 'en')
+          setReelUrl(`https://res.cloudinary.com/news-to-reel/video/upload/v1743757100/reel_en.mp4`);
+        else if (language === 'hi')
+          setReelUrl(`https://res.cloudinary.com/news-to-reel/video/upload/v1743185164/reel_hi.mp4`);
+        else if (language === 'ml')
+          setReelUrl(`https://res.cloudinary.com/news-to-reel/video/upload/v1743757440/reel_c54k0k.mp4`);
       }
       else {
         loadingToast = toast.info('Generating Reel. Please wait...', { autoClose: 80000 }); // 80 seconds
