@@ -1,13 +1,13 @@
-# news-to-reel
+# NewsFlix
 B-tech final project.
 
 ## Setup
 
 To run the web app in your machine, download the code ZIP file or clone this repository.<br>
-Open a terminal and change directory to `news-to-reel`.
+Open a terminal and change directory to `NewsFlix`.
 ```bash
-git clone https://github.com/AutoMarkGraders/news-to-reel.git
-cd news-to-reel
+git clone https://github.com/AutoMarkGraders/NewsFlix.git
+cd NewsFlix
 ```
 
 ### 1. Front-end
